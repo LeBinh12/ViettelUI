@@ -4,7 +4,7 @@ import LoginScreen from "./page/LoginScreen";
 import HomeLayout from "./layouts/HomeLayout";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { PrivateRoute, PublicRoute } from "./routes/Guard";
+// import { PrivateRoute, PublicRoute } from "./routes/Guard";
 import { useLoadUser } from "./hooks/useLoadUser";
 
 function App() {
@@ -14,9 +14,9 @@ function App() {
       <Routes>
         <Route
           element={
-            <PublicRoute>
-              <AuthLayout />
-            </PublicRoute>
+            // <PublicRoute>
+            <AuthLayout />
+            // </PublicRoute>
           }
         >
           <Route path="/login" element={<LoginScreen />} />
@@ -24,9 +24,9 @@ function App() {
 
         <Route
           element={
-            <PrivateRoute>
-              <HomeLayout />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <HomeLayout />
+            // </PrivateRoute>
           }
         >
           <Route path="/" element={<HomeLayout />} />
