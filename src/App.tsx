@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import AuthLayout from "./layouts/AuthenLayout";
 import LoginScreen from "./page/LoginScreen";
 import HomeLayout from "./layouts/HomeLayout";
+import HomeScreen from "./page/HomeScreen";
+import PackageDetail from "./page/PackageDetail";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 // import { PrivateRoute, PublicRoute } from "./routes/Guard";
@@ -29,8 +31,13 @@ function App() {
             // </PrivateRoute>
           }
         >
-          <Route path="/" element={<HomeLayout />} />
-          <Route path="/home" element={<HomeLayout />} />
+          {/* <Route path="/" element={<HomeLayout />} />
+          <Route path="/home" element={<HomeLayout />} /> */}
+           <Route index element={<HomeScreen />} />
+          <Route path="/home" element={<HomeScreen />} />
+          
+          {/* Route cho PackageDetail */}
+          <Route path="/package/:id" element={<PackageDetail />} />
         </Route>
       </Routes>
 
