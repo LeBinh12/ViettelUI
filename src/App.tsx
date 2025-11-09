@@ -7,6 +7,8 @@ import HomeScreen from "./page/HomeScreen";
 import PackageDetail from "./page/PackageDetail";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import PaymentPage from "./page/PaymentPage";
+import { InvoiceManagement } from "./page/InvoiceManagement";
 // import { PrivateRoute, PublicRoute } from "./routes/Guard";
 import { useLoadUser } from "./hooks/useLoadUser";
 
@@ -39,6 +41,8 @@ function App() {
           <Route path="/home" element={<HomeScreen />} />
 
           <Route path="/package/:id" element={<PackageDetail />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/InvoiceManagement" element={<InvoiceManagement />} />
         </Route>
       </Routes>
 
