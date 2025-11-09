@@ -230,11 +230,13 @@ export default function HomeLayout(): JSX.Element {
         {/* Nút cuộn lên */}
         {showScrollTop && (
           <button
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 text-blue-600 hover:text-blue-700 transition-transform duration-300 hover:scale-110"
-          >
-            <BsArrowUpCircleFill size={45} />
-          </button>
+  onClick={scrollToTop}
+  aria-label="Cuộn lên đầu trang"
+  className="fixed bottom-6 right-6 text-blue-600 hover:text-blue-700 transition-transform duration-300 hover:scale-110"
+>
+  <BsArrowUpCircleFill size={45} />
+</button>
+
         )}
       </footer>
     </div>
