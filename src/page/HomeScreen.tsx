@@ -13,7 +13,9 @@ const bannerImages = [
 ];
 
 const HomeScreen: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"month" | "day" | "other">("month");
+  const [activeTab, setActiveTab] = useState<"month" | "day" | "other">(
+    "month"
+  );
   const [progress, setProgress] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [categories, setCategories] = useState<any[]>([]);
@@ -60,7 +62,8 @@ const HomeScreen: React.FC = () => {
 
   //  Lọc gói cước theo tab
   const filterByTab = (pkg: any) => {
-    if (activeTab === "month") return pkg.duration_months > 0 && pkg.duration_months <= 3;
+    if (activeTab === "month")
+      return pkg.duration_months > 0 && pkg.duration_months <= 3;
     if (activeTab === "day") return pkg.duration_months === 0;
     if (activeTab === "other") return pkg.duration_months > 3;
     return true;
@@ -143,8 +146,7 @@ const HomeScreen: React.FC = () => {
                   </button>
                 </div>
 
-               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-10 justify-items-center">
-
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-10 justify-items-center">
                   {categoryPackages.map((pkg) => (
                     <PackageCard
                       key={pkg.id}

@@ -23,7 +23,7 @@ function App() {
           }
         >
           <Route path="/login" element={<LoginScreen />} />
-           <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/register" element={<RegisterScreen />} />
         </Route>
 
         <Route
@@ -35,10 +35,9 @@ function App() {
         >
           {/* <Route path="/" element={<HomeLayout />} />
           <Route path="/home" element={<HomeLayout />} /> */}
-           <Route index element={<HomeScreen />} />
+          <Route index element={<HomeScreen />} />
           <Route path="/home" element={<HomeScreen />} />
-          
-          {/* Route cho PackageDetail */}
+
           <Route path="/package/:id" element={<PackageDetail />} />
         </Route>
       </Routes>
