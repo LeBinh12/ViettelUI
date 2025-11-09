@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import AuthLayout from "./layouts/AuthenLayout";
 import LoginScreen from "./page/LoginScreen";
+import RegisterScreen from "./page/RegisterScreen";
 import HomeLayout from "./layouts/HomeLayout";
 import HomeScreen from "./page/HomeScreen";
 import PackageDetail from "./page/PackageDetail";
@@ -22,6 +23,7 @@ function App() {
           }
         >
           <Route path="/login" element={<LoginScreen />} />
+           <Route path="/register" element={<RegisterScreen />} />
         </Route>
 
         <Route
