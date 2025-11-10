@@ -28,7 +28,7 @@ const DUMMY_INVOICES: Invoice[] = [
     customerName: "Lê Văn C",
     date: "2025-11-03",
     amount: 150000,
-    status: "Canceled",
+    status: "Cancelled",
   },
   {
     id: "HD004",
@@ -55,7 +55,7 @@ export const InvoiceManagement: React.FC = () => {
         return "bg-green-100 text-green-800";
       case "Pending":
         return "bg-yellow-100 text-yellow-800";
-      case "Canceled":
+      case "Cancelled":
         return "bg-red-100 text-red-800";
     }
   };

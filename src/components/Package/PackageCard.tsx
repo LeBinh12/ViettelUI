@@ -43,15 +43,15 @@ const PackageCard: React.FC<PackageCardProps> = ({
         <FaTiktok size={28} className="hover:scale-110 transition-transform" />
       </div>
 
-{/* Giá */}
-<div className="flex items-baseline justify-center mb-5">
-  <span className="text-2xl font-bold text-gray-800 whitespace-nowrap">
-    {price.toLocaleString("vi-VN")}₫
-  </span>
-  <span className="text-lg font-normal text-gray-600 ml-1 whitespace-nowrap">
-    {isDay || duration_months === 0 ? "/ Ngày" : "/ Tháng"}
-  </span>
-</div>
+      {/* Giá */}
+      <div className="flex items-baseline justify-center mb-5">
+        <span className="text-2xl font-bold text-gray-800 whitespace-nowrap">
+          {price.toLocaleString("vi-VN")}₫
+        </span>
+        <span className="text-lg font-normal text-gray-600 ml-1 whitespace-nowrap">
+          {isDay || duration_months === 0 ? "/ Ngày" : "/ Tháng"}
+        </span>
+      </div>
 
 
       {/* Nút */}
