@@ -11,7 +11,7 @@ import PaymentPage from "./page/PaymentPage";
 import { InvoiceManagement } from "./page/InvoiceManagement";
 // import { PrivateRoute, PublicRoute } from "./routes/Guard";
 import { useLoadUser } from "./hooks/useLoadUser";
-
+import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
 function App() {
   useLoadUser();
   return (
@@ -43,6 +43,7 @@ function App() {
           <Route path="/package/:id" element={<PackageDetail />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/InvoiceManagement" element={<InvoiceManagement />} />
+          <Route path="/confirm-payment" element={<ConfirmPaymentPage />} />
         </Route>
       </Routes>
 

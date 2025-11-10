@@ -4,7 +4,7 @@ import type { Invoice } from '../types/invoice';
 const DUMMY_INVOICES: Invoice[] = [
     { id: 'HD001', customerName: 'Nguyễn Văn A', date: '2025-11-01', amount: 100000, status: 'Paid' },
     { id: 'HD002', customerName: 'Trần Thị B', date: '2025-11-02', amount: 200000, status: 'Pending' },
-    { id: 'HD003', customerName: 'Lê Văn C', date: '2025-11-03', amount: 150000, status: 'Canceled' },
+    { id: 'HD003', customerName: 'Lê Văn C', date: '2025-11-03', amount: 150000, status: 'Cancelled' },
     { id: 'HD004', customerName: 'Phạm Thị D', date: '2025-11-04', amount: 500000, status: 'Paid' },
 ];
 
@@ -21,7 +21,7 @@ export const InvoiceManagement: React.FC = () => {
         switch (status) {
             case 'Paid': return 'bg-green-100 text-green-800';
             case 'Pending': return 'bg-yellow-100 text-yellow-800';
-            case 'Canceled': return 'bg-red-100 text-red-800';
+            case 'Cancelled': return 'bg-red-100 text-red-800';
         }
     };
 

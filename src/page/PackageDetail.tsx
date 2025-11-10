@@ -112,21 +112,21 @@ const PackageDetail: React.FC = () => {
         </div>
       </section>
 
- {/* Gói tương tự */}
-{pkgDetail.similar_packages && (
-  <section className="bg-white rounded-2xl shadow p-6 mb-10 border border-gray-200 max-w-[1400px] mx-auto">
-    <div className="flex justify-between items-center mb-6">
-      <h3 className="text-2xl font-semibold text-gray-900">Gói cước tương tự</h3>
-      <button
-        className="text-red-600 font-medium hover:underline"
-        onClick={() => navigate("/")}
-      >
-        Xem tất cả →
-      </button>
-    </div>
+      {/* Gói tương tự */}
+      {pkgDetail.similar_packages && (
+        <section className="bg-white rounded-2xl shadow p-6 mb-10 border border-gray-200 max-w-[1400px] mx-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-semibold text-gray-900">Gói cước tương tự</h3>
+            <button
+              className="text-red-600 font-medium hover:underline"
+              onClick={() => navigate("/")}
+            >
+              Xem tất cả →
+            </button>
+          </div>
 
-    <div
-      className="
+          <div
+            className="
         grid
         grid-cols-1
         sm:grid-cols-2
@@ -137,24 +137,24 @@ const PackageDetail: React.FC = () => {
         justify-items-center
         w-full
       "
-    >
-      {pkgDetail.similar_packages.map((pkg: any) => (
-        <PackageCard
-          key={pkg.id}
-          id={pkg.id}
-          price={pkg.price}
-          duration_months={pkg.duration_months}
-          isDay={pkg.duration_months === 0}
-        />
-      ))}
-    </div>
-  </section>
-)}
+          >
+            {pkgDetail.similar_packages.map((pkg: any) => (
+              <PackageCard
+                key={pkg.id}
+                id={pkg.id}
+                price={pkg.price}
+                duration_months={pkg.duration_months}
+                isDay={pkg.duration_months === 0}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
 
 
 
-      
+
 
       {/* Footer */}
       {pkgDetail.provider_info && (

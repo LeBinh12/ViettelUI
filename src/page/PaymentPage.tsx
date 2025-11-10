@@ -103,12 +103,9 @@ export default function PaymentPage(): React.JSX.Element {
 
 
                         <button
-                            onClick={() => setShowPopup(true)}
-                            disabled={!isValid || !chosenMethod || !isPaymentFormRequired(chosenMethod)}
-                            className={`mt-6 w-full py-3 rounded-lg text-white font-semibold ${isValid && chosenMethod && isPaymentFormRequired(chosenMethod)
-                                ? 'bg-orange-600 hover:bg-orange-700'
-                                : 'bg-gray-400 cursor-not-allowed'
-                                }`}
+                            onClick={() => window.location.href = "/confirm-payment"}
+                            disabled={!isValid}
+                            className="mt-6 w-full py-3 rounded-lg text-white font-semibold bg-orange-600 hover:bg-orange-700"
                         >
                             Tiến hành thanh toán
                         </button>
