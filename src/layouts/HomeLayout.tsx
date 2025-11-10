@@ -40,15 +40,18 @@ export default function HomeLayout(): JSX.Element {
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           {/* Logo */}
-          <div
-            className="flex items-center space-x-3 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            <div className="w-10 h-10 bg-gradient-to-br from-[#2665b1] to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-md">
-              C
-            </div>
-            <h1 className="text-xl font-bold text-gray-800">Chattrix</h1>
-          </div>
+         <div 
+  className="flex items-center space-x-3 cursor-pointer" 
+  onClick={() => navigate("/")}
+>
+  <img 
+    src="/assets/logo.jpg" 
+    alt="Chattrix Logo" 
+    className="w-16 h-16 rounded-full shadow-md object-cover" 
+  />
+</div>
+
+
 
           {/* Navigation Menu */}
           <div className="flex-1 flex justify-center">
@@ -115,12 +118,11 @@ export default function HomeLayout(): JSX.Element {
           {/* Cột 1: Logo + mô tả + liên hệ */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#2665b1] to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-md">
-                C
-              </div>
-              <span className="text-xl font-semibold text-gray-800">
-                Chattrix
-              </span>
+              <img 
+    src="/assets/logo.jpg" 
+    alt="Chattrix Logo" 
+    className="w-14 h-14 rounded-full shadow-md object-cover" 
+  />
             </div>
             <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
               Nền tảng cung cấp các gói dịch vụ Internet, combo ưu đãi, và giải
@@ -138,7 +140,7 @@ export default function HomeLayout(): JSX.Element {
               </p>
               <p className="flex items-center space-x-2">
                 <FaEnvelope className="text-blue-500" />
-                <span>Email: support@chattrix.vn</span>
+                <span>Email: support@vietdev.vn</span>
               </p>
             </div>
           </div>
@@ -169,7 +171,7 @@ export default function HomeLayout(): JSX.Element {
                 Kết nối với chúng tôi
               </h4>
               <p className="text-gray-600 text-sm mb-2">
-                Theo dõi Chattrix để nhận ưu đãi mới nhất.
+                Theo dõi VietDev để nhận ưu đãi mới nhất.
               </p>
               <div className="flex space-x-4 text-gray-500">
                 <a href="#" className="hover:text-blue-600 transition">
@@ -223,7 +225,7 @@ export default function HomeLayout(): JSX.Element {
         {/* Dòng bản quyền */}
         <div className="border-t border-gray-200 text-center py-4 text-sm text-gray-500">
           © {new Date().getFullYear()}{" "}
-          <span className="font-semibold text-gray-700">Chattrix</span>. All
+          <span className="font-semibold text-gray-700">VietDev</span>. All
           rights reserved.
         </div>
 
@@ -235,8 +237,7 @@ export default function HomeLayout(): JSX.Element {
   className="fixed bottom-6 right-6 text-blue-600 hover:text-blue-700 transition-transform duration-300 hover:scale-110"
 >
   <BsArrowUpCircleFill size={45} />
-</button>
-
+  </button>
         )}
       </footer>
     </div>
