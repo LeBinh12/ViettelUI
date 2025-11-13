@@ -43,20 +43,20 @@ const PackageCard: React.FC<PackageCardProps> = ({
         <FaTiktok size={28} className="hover:scale-110 transition-transform" />
       </div>
 
-{/* Giá */}
-<div className="flex items-baseline justify-center mb-5">
-  <span className="text-2xl font-bold text-gray-800 whitespace-nowrap">
-    {price.toLocaleString("vi-VN")}₫
-  </span>
-  <span className="text-lg font-normal text-gray-600 ml-1 whitespace-nowrap">
-    {isDay || duration_months === 0 ? "/ Ngày" : "/ Tháng"}
-  </span>
-</div>
+      {/* Giá */}
+      <div className="flex items-baseline justify-center mb-5">
+        <span className="text-2xl font-bold text-gray-800 whitespace-nowrap">
+          {price.toLocaleString("vi-VN")}₫
+        </span>
+        <span className="text-lg font-normal text-gray-600 ml-1 whitespace-nowrap">
+          {isDay || duration_months === 0 ? "/ Ngày" : "/ Tháng"}
+        </span>
+      </div>
 
 
       {/* Nút */}
       <div className="flex w-full gap-3 mt-auto">
-        <button className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 text-lg font-medium transition">
+        <button className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 text-lg font-medium transition"  onClick={() => navigate(`/payment`)}>
           Đăng ký
         </button>
         <button
