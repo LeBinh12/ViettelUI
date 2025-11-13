@@ -1,185 +1,243 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { mockServicePackageDetails } from "../data/mock/servicePackageDetail.mock";
 import PackageCard from "../components/Package/PackageCard";
-import { servicePackageDetailApi } from "../api";
+import { Wallet, Clock, Wifi, MessageSquareText } from "lucide-react";
 
 const PackageDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [pkgDetail, setPkgDetail] = useState<any | null>(null);
+  const [notFound, setNotFound] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchDetail() {
-      if (!id) return;
-      const data = await servicePackageDetailApi.getById(id);
-      setPkgDetail(data);
+    const found = mockServicePackageDetails.find((p) => p.id === id);
+    if (found) {
+      setPkgDetail(found);
+      setNotFound(false);
+    } else {
+      setNotFound(true);
     }
-    fetchDetail();
   }, [id]);
 
-  if (!pkgDetail) {
+  if (notFound) {
     return (
-      <div className="max-w-4xl mx-auto py-16 text-center">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-          Không tìm thấy gói cước
-        </h2>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4076/4076503.png"
+          alt="Not found"
+          className="w-40 mb-6 opacity-80"
+        />
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          Gói cước không tồn tại
+        </h1>
+        <p className="text-gray-500 mb-6">
+          Có thể gói này đã bị gỡ hoặc bạn nhập sai đường dẫn.
+        </p>
         <button
-          className="px-6 py-2 bg-red-500 text-white rounded-lg"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
+          className="bg-[#d6001c] text-white font-bold rounded-full px-8 py-3 hover:bg-[#b80019] transition-all duration-300"
         >
-          Quay lại trang chủ
+          Quay lại
         </button>
       </div>
     );
   }
 
+  if (!pkgDetail) return null;
+
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
-      {/* Nút quay lại */}
-      <button
-        className="text-red-600 font-medium mb-4 flex items-center hover:underline"
-        onClick={() => navigate("/")}
-      >
-        ← Quay lại
-      </button>
+    <div className="max-w-6xl mx-auto p-6 pb-28">
+      {/* Tiêu đề */}
+      <h1 className="text-4xl font-bold mb-8">
+        <span className="text-red-600">{pkgDetail.package_name}</span>
+      </h1>
 
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow p-6 mb-6 border border-gray-200">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
-          Gói cước Viettel {pkgDetail.package_name}
-        </h1>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 text-center">
-          <div className="border rounded-lg p-4">
-            <p className="text-gray-500">Cước phí</p>
-            <p className="text-xl font-semibold text-red-600">
-              {pkgDetail.price.toLocaleString("vi-VN")}₫
-            </p>
-          </div>
-          <div className="border rounded-lg p-4">
-            <p className="text-gray-500">Thời hạn sử dụng</p>
-            <p className="text-xl font-semibold text-gray-800">
-              {pkgDetail.duration_months || 1} tháng
-            </p>
-          </div>
-          <div className="border rounded-lg p-4">
-            <p className="text-gray-500">Dung lượng data</p>
-            <p className="text-xl font-semibold text-gray-800">
-              {pkgDetail.data_info || "Không giới hạn"}
-            </p>
-          </div>
-          <div className="border rounded-lg p-4">
-            <p className="text-gray-500">Cú pháp đăng ký</p>
-            <p className="text-base font-semibold text-red-600">
-              {pkgDetail.syntax_register}
-            </p>
-          </div>
-        </div>
-
-        <p className="text-gray-700">{pkgDetail.description}</p>
+      {/* --- SECTION 1: TÓM TẮT --- */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <SummaryCard
+          icon={<Wallet className="w-6 h-6 text-[#d6001c]" />}
+          label="Cước phí"
+          value={`${pkgDetail.price.toLocaleString("vi-VN")}đ`}
+        />
+        <SummaryCard
+          icon={<Clock className="w-6 h-6 text-[#d6001c]" />}
+          label="Thời hạn sử dụng"
+          value={
+            pkgDetail.duration_months === 0
+              ? "1 ngày"
+              : `${pkgDetail.duration_months} tháng`
+          }
+        />
+        <SummaryCard
+          icon={<Wifi className="w-6 h-6 text-[#d6001c]" />}
+          label="Dung lượng data 4G"
+          value={pkgDetail.data_info}
+          isHtml
+        />
+        <SummaryCard
+          icon={<MessageSquareText className="w-6 h-6 text-[#d6001c]" />}
+          label="Cú pháp đăng ký qua SMS"
+          value={pkgDetail.syntax_register}
+          isHtml
+          highlight
+        />
       </div>
 
-      {/* Chi tiết ưu đãi */}
-      <section className="bg-white rounded-2xl shadow p-6 mb-8 border border-gray-200">
-        <h3 className="text-2xl font-semibold mb-4 text-gray-900">Chi tiết ưu đãi</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-700">
-          {pkgDetail.benefits?.map((b: string, i: number) => (
-            <li key={i}>{b}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Điều kiện áp dụng */}
-      <section className="bg-white rounded-2xl shadow p-6 mb-8 border border-gray-200">
-        <h3 className="text-2xl font-semibold mb-4 text-gray-900">Điều kiện áp dụng</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-700">
-          {pkgDetail.terms?.map((t: string, i: number) => (
-            <li key={i}>{t}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Câu hỏi thường gặp */}
-      <section className="bg-white rounded-2xl shadow p-6 mb-8 border border-gray-200">
-        <h3 className="text-2xl font-semibold mb-4 text-gray-900">Câu hỏi thường gặp</h3>
-        <div className="space-y-4">
-          {pkgDetail.questions?.map((q: any, i: number) => (
-            <div key={i} className="border rounded-lg p-4">
-              <p className="font-semibold text-gray-800 mb-1">❓ {q.question}</p>
-              <p className="text-gray-700">➡️ {q.answer}</p>
-            </div>
-          ))}
+      {/* --- SECTION 2: GIỚI THIỆU --- */}
+      <div className="bg-white rounded-3xl shadow border border-gray-200 p-8 mb-8">
+        <div className="prose prose-gray max-w-none mb-10">
+          <h2 className="text-2xl font-bold mb-6">
+            Giới thiệu{" "}
+            <span className="text-red-600">{pkgDetail.package_name}</span>
+          </h2>
+          {pkgDetail.description ? (
+            <div dangerouslySetInnerHTML={{ __html: pkgDetail.description }} />
+          ) : (
+            <p className="text-gray-500 italic">
+              Hiện chưa có mô tả cho gói cước này.
+            </p>
+          )}
         </div>
-      </section>
 
- {/* Gói tương tự */}
-{pkgDetail.similar_packages && (
-  <section className="bg-white rounded-2xl shadow p-6 mb-10 border border-gray-200 max-w-[1400px] mx-auto">
-    <div className="flex justify-between items-center mb-6">
-      <h3 className="text-2xl font-semibold text-gray-900">Gói cước tương tự</h3>
-      <button
-        className="text-red-600 font-medium hover:underline"
-        onClick={() => navigate("/")}
-      >
-        Xem tất cả →
-      </button>
-    </div>
+        {/* Chi tiết ưu đãi */}
+        <div className="mb-10">
+          <h3 className="text-2xl font-semibold mb-4">
+            Chi tiết ưu đãi gói {pkgDetail.package_name}
+          </h3>
+          {pkgDetail.benefits?.length > 0 ? (
+            <ul className="list-disc pl-6 space-y-2">
+              {pkgDetail.benefits.map((b: string, i: number) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: b }} />
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500 italic">
+              Chưa có thông tin chi tiết ưu đãi.
+            </p>
+          )}
+        </div>
 
-    <div
-      className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        md:grid-cols-3
-        xl:grid-cols-4
-        2xl:grid-cols-5
-        gap-x-8 gap-y-10
-        justify-items-center
-        w-full
-      "
-    >
-      {pkgDetail.similar_packages.map((pkg: any) => (
-        <PackageCard
-          key={pkg.id}
-          id={pkg.id}
-          price={pkg.price}
-          duration_months={pkg.duration_months}
-          isDay={pkg.duration_months === 0}
-        />
-      ))}
-    </div>
-  </section>
-)}
+        {/* Nhà cung cấp */}
+        <div>
+          <h3 className="text-xl font-semibold mb-3">Đơn vị cung cấp</h3>
+          {pkgDetail.provider_info ? (
+            <>
+              <p>
+                <strong>{pkgDetail.provider_info.company}</strong>
+              </p>
+              <p>Địa chỉ: {pkgDetail.provider_info.address}</p>
+              <p>Hotline: {pkgDetail.provider_info.hotline}</p>
+              <p>
+                Website:{" "}
+                <a
+                  href={pkgDetail.provider_info.website}
+                  className="text-blue-600 hover:underline"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {pkgDetail.provider_info.website}
+                </a>
+              </p>
+            </>
+          ) : (
+            <p className="text-gray-500 italic">
+              Thông tin nhà cung cấp chưa được cập nhật.
+            </p>
+          )}
+        </div>
+      </div>
 
-
-
-
-      
-
-      {/* Footer */}
-      {pkgDetail.provider_info && (
-        <footer className="bg-gray-50 rounded-2xl shadow p-6 border border-gray-200">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Đơn vị cung cấp</h3>
-          <p>
-            <strong>{pkgDetail.provider_info.company}</strong>
+      {/* --- GÓI CƯỚC TƯƠNG TỰ --- */}
+      <div className="mt-12">
+        <h3 className="text-2xl font-extrabold text-gray-800 mb-8 tracking-wide uppercase">
+          Gói cước tương tự
+        </h3>
+        {pkgDetail.similar_packages?.length > 0 ? (
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {pkgDetail.similar_packages.map((p: any) => (
+              <PackageCard
+                key={p.id}
+                id={p.id}
+                data={p.data}
+                price={p.price}
+                duration_months={pkgDetail.duration_months}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 italic">
+            Hiện chưa có gói tương tự nào được đề xuất.
           </p>
-          <p>Địa chỉ: {pkgDetail.provider_info.address}</p>
-          <p>Hotline: {pkgDetail.provider_info.hotline}</p>
-          <p>
-            Website:{" "}
-            <a
-              href={pkgDetail.provider_info.website}
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              {pkgDetail.provider_info.website}
-            </a>
+        )}
+      </div>
+
+      {/* --- STICKY FOOTER --- */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-3px_10px_rgba(0,0,0,0.05)] flex justify-between items-center px-10 py-5 z-50">
+        <div className="pl-12">
+          <p className="text-2xl font-extrabold text-gray-900">
+            <span className="text-[#d6001c]">{pkgDetail.package_name}</span>
           </p>
-        </footer>
-      )}
+          <p className="text-lg font-bold text-gray-800 mt-1">
+            {pkgDetail.price.toLocaleString("vi-VN")}đ{" "}
+            <span className="font-normal text-gray-500">
+              / {pkgDetail.duration_months === 0 ? "ngày" : `${pkgDetail.duration_months} tháng`}
+            </span>
+          </p>
+        </div>
+        <button
+          className="bg-[#d6001c] text-white font-bold rounded-full px-10 py-3 
+                     shadow-[0_6px_12px_rgba(214,0,28,0.4)] 
+                     hover:shadow-[0_8px_16px_rgba(214,0,28,0.5)] 
+                     hover:bg-[#b80019] active:scale-95 
+                     transition-all duration-300 mr-12"
+          onClick={() => navigate(`/payment`)}
+        >
+          ĐĂNG KÝ
+        </button>
+      </div>
     </div>
   );
 };
 
 export default PackageDetail;
+
+// ===== Component con gọn gàng cho phần summary =====
+interface SummaryCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  isHtml?: boolean;
+  highlight?: boolean;
+}
+
+const SummaryCard: React.FC<SummaryCardProps> = ({
+  icon,
+  label,
+  value,
+  isHtml,
+  highlight,
+}) => (
+  <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl shadow-sm p-4">
+    <div className="p-2 bg-[#fff1f2] rounded-full">{icon}</div>
+    <div className="min-w-0">
+      <p className="text-gray-500 text-sm">{label}</p>
+      {isHtml ? (
+        <div
+          className={`text-lg font-bold truncate whitespace-nowrap ${
+            highlight ? "text-[#d6001c]" : "text-gray-900"
+          }`}
+          dangerouslySetInnerHTML={{ __html: value }}
+        />
+      ) : (
+        <p
+          className={`text-lg font-bold truncate whitespace-nowrap ${
+            highlight ? "text-[#d6001c]" : "text-gray-900"
+          }`}
+        >
+          {value}
+        </p>
+      )}
+    </div>
+  </div>
+);
