@@ -25,9 +25,9 @@ export interface ServicePackageDetail {
   description: string;            // mô tả giới thiệu
   data_info: string;              // ví dụ: "6GB/ngày (180GB/tháng)"
   syntax_register: string;        // cú pháp SMS
-  terms: string[];                // điều kiện áp dụng
+  // terms: string[];                // điều kiện áp dụng
   benefits: string[];             // các ưu đãi
-  questions: FAQ[];               // câu hỏi thường gặp
+  // questions: FAQ[];               // câu hỏi thường gặp
   similar_packages: SimilarPackage[]; // gói tương tự
   provider_info: ProviderInfo;
 }

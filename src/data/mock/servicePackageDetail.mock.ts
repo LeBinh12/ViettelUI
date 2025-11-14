@@ -1,34 +1,25 @@
 import type { ServicePackageDetail } from "../../types/servicePackageDetail";
 
 export const mockServicePackageDetails: ServicePackageDetail[] = [
-  // --- GÓI WIFI ---
+  // === GÓI INTERNET ===
   {
     id: "pkg-001",
     package_name: "Gói Cơ Bản Internet",
     price: 99000,
     duration_months: 1,
-    description:
-      "Gói Cơ Bản Internet cung cấp tốc độ truy cập ổn định, phù hợp cho nhu cầu học tập, làm việc cơ bản và xem video trực tuyến.",
-    data_info: "Tốc độ 50Mbps",
-    syntax_register: "COBAN gửi 888",
-    terms: [
-      "Áp dụng cho khách hàng cá nhân mới hoặc gia hạn gói cước.",
-      "Không áp dụng đồng thời với các chương trình khuyến mãi khác.",
-    ],
+    description: `<p>Gói <strong>Cơ Bản Internet</strong> mang lại tốc độ truy cập ổn định, phù hợp cho hộ gia đình nhỏ hoặc cá nhân làm việc tại nhà.</p>
+    <p>Cung cấp đường truyền tốc độ <strong>30Mbps</strong>, hỗ trợ kết nối tối đa 4 thiết bị cùng lúc.</p>`,
+    data_info: `<p><strong>30 Mbps</strong> băng thông</p>`,
+    syntax_register: `<p><code>CBI gửi 191</code></p>`,
     benefits: [
-      "Miễn phí modem wifi thế hệ mới.",
-      "Hỗ trợ kỹ thuật 24/7.",
-      "Bảo trì miễn phí trong suốt thời gian hợp đồng.",
-    ],
-    questions: [
-      {
-        question: "Gói có giới hạn dung lượng không?",
-        answer: "Không, gói cung cấp tốc độ 50Mbps và không giới hạn dung lượng truy cập.",
-      },
+      `<p>Miễn phí modem Wi-Fi.</p>`,
+      `<p>Không giới hạn dung lượng truy cập.</p>`,
+      `<p>Hỗ trợ kỹ thuật 24/7.</p>`,
     ],
     similar_packages: [
-      { id: "pkg-002", name: "Gói Gia Đình Wifi Plus", data: "100Mbps", price: 199000 },
-      { id: "pkg-003", name: "Gói Doanh Nghiệp Pro", data: "300Mbps", price: 499000 },
+      { id: "pkg-002", name: "Gói Gia Đình Wifi Plus", data: "50 MB", price: 199000 },
+      { id: "pkg-004", name: "Gói Internet Tốc Độ Cao", data: "100 MB", price: 299000 },
+      { id: "pkg-005", name: "Gói Internet VIP Fiber", data: "200 MB", price: 799000 },
     ],
     provider_info: {
       company: "Viettel Telecom",
@@ -38,30 +29,123 @@ export const mockServicePackageDetails: ServicePackageDetail[] = [
     },
   },
 
-  // --- GÓI DATA NGÀY ---
+  {
+    id: "pkg-002",
+    package_name: "Gói Gia Đình Wifi Plus",
+    price: 199000,
+    duration_months: 3,
+    description: `<p><strong>Wifi Plus</strong> cung cấp tốc độ <strong>50 Mbps</strong>, ổn định cho nhu cầu học tập và giải trí của gia đình.</p>`,
+    data_info: `<p><strong>50 Mbps</strong></p>`,
+    syntax_register: `<p><code>WFPLUS gửi 191</code></p>`,
+    benefits: [
+      `<p>Miễn phí lắp đặt và thiết bị modem.</p>`,
+      `<p>Hỗ trợ kỹ thuật tận nơi.</p>`,
+      `<p>Tặng thêm 1 tháng khi đóng cước 6 tháng.</p>`,
+    ],
+    similar_packages: [
+      { id: "pkg-001", name: "Gói Cơ Bản Internet", data: "30 MB", price: 99000 },
+      { id: "pkg-004", name: "Gói Internet Tốc Độ Cao", data: "100 MB", price: 299000 },
+    ],
+    provider_info: {
+      company: "VNPT",
+      address: "57 Huỳnh Thúc Kháng, Hà Nội",
+      hotline: "18001091",
+      website: "https://vnpt.com.vn",
+    },
+  },
+
+  {
+    id: "pkg-003",
+    package_name: "Gói Doanh Nghiệp Pro",
+    price: 499000,
+    duration_months: 6,
+    description: `<p><strong>Doanh Nghiệp Pro</strong> cung cấp băng thông <strong>150 Mbps</strong> ổn định, cam kết uptime 99.9%.</p>`,
+    data_info: `<p><strong>150 Mbps</strong></p>`,
+    syntax_register: `<p><code>DNPRO gửi 191</code></p>`,
+    benefits: [
+      `<p>IP tĩnh miễn phí.</p>`,
+      `<p>Ưu tiên hỗ trợ kỹ thuật 24/7.</p>`,
+      `<p>Báo cáo thống kê sử dụng hàng tháng.</p>`,
+    ],
+    similar_packages: [
+      { id: "pkg-004", name: "Gói Internet Tốc Độ Cao", data: "100 MB", price: 299000 },
+      { id: "pkg-005", name: "Gói Internet VIP Fiber", data: "200 MB", price: 799000 },
+    ],
+    provider_info: {
+      company: "FPT Telecom",
+      address: "48 Vạn Bảo, Ba Đình, Hà Nội",
+      hotline: "19006600",
+      website: "https://fpt.vn",
+    },
+  },
+
+  {
+    id: "pkg-004",
+    package_name: "Gói Internet Tốc Độ Cao",
+    price: 299000,
+    duration_months: 3,
+    description: `<p><strong>Internet Tốc Độ Cao</strong> mang đến trải nghiệm mượt mà với băng thông 100 Mbps – phù hợp xem phim, học trực tuyến.</p>`,
+    data_info: `<p><strong>100 Mbps</strong></p>`,
+    syntax_register: `<p><code>ITDC gửi 191</code></p>`,
+    benefits: [
+      `<p>Miễn phí modem và lắp đặt.</p>`,
+      `<p>Tặng thêm 5GB data di động khi đăng ký cùng SIM Viettel.</p>`,
+      `<p>Bảo trì miễn phí trong suốt thời gian sử dụng.</p>`,
+    ],
+    similar_packages: [
+      { id: "pkg-001", name: "Gói Cơ Bản Internet", data: "30 MB", price: 99000 },
+      { id: "pkg-002", name: "Wifi Plus", data: "50 MB", price: 199000 },
+      { id: "pkg-005", name: "VIP Fiber", data: "200 MB", price: 799000 },
+    ],
+    provider_info: {
+      company: "Viettel Telecom",
+      address: "Số 1 Giang Văn Minh, Ba Đình, Hà Nội",
+      hotline: "18008198",
+      website: "https://viettel.vn",
+    },
+  },
+
+  {
+    id: "pkg-005",
+    package_name: "Gói Internet VIP Fiber",
+    price: 799000,
+    duration_months: 12,
+    description: `<p><strong>VIP Fiber</strong> là gói cao cấp với tốc độ đường truyền lên tới <strong>200 Mbps</strong>, phù hợp doanh nghiệp nhỏ hoặc gia đình nhiều thiết bị.</p>`,
+    data_info: `<p><strong>200 Mbps</strong></p>`,
+    syntax_register: `<p><code>VIPF gửi 191</code></p>`,
+    benefits: [
+      `<p>Miễn phí lắp đặt.</p>`,
+      `<p>Bảo hành thiết bị trọn đời.</p>`,
+      `<p>Tặng 2 tháng sử dụng khi thanh toán năm.</p>`,
+    ],
+    similar_packages: [
+      { id: "pkg-004", name: "Internet Tốc Độ Cao", data: "100 MB", price: 299000 },
+      { id: "pkg-003", name: "Doanh Nghiệp Pro", data: "150 MB", price: 499000 },
+    ],
+    provider_info: {
+      company: "Viettel Telecom",
+      address: "Số 1 Giang Văn Minh, Ba Đình, Hà Nội",
+      hotline: "18008198",
+      website: "https://viettel.vn",
+    },
+  },
+
+  // === GÓI DATA NGÀY ===
   {
     id: "pkg-101",
     package_name: "Gói Data Ngày D5",
     price: 5000,
     duration_months: 0,
-    description:
-      "Gói D5 cung cấp 1GB data tốc độ cao trong 1 ngày, phù hợp cho nhu cầu lướt web, Facebook, Zalo, và xem video ngắn.",
-    data_info: "1GB/ngày",
-    syntax_register: "D5 gửi 191",
-    terms: [
-      "Áp dụng cho thuê bao di động trả trước và trả sau.",
-      "Hết 1GB, hệ thống ngắt kết nối, không phát sinh cước vượt gói.",
-    ],
+    description: `<p>Gói <strong>D5</strong> cung cấp <strong>500MB/ngày</strong>, thích hợp cho người dùng kiểm tra mạng xã hội, email.</p>`,
+    data_info: `<p><strong>500MB/ngày</strong></p>`,
+    syntax_register: `<p><code>D5 gửi 191</code></p>`,
     benefits: [
-      "1GB tốc độ cao mỗi ngày.",
-      "Hết dung lượng ngắt truy cập, tránh phát sinh phí.",
-    ],
-    questions: [
-      { question: "Gói D5 có tự gia hạn không?", answer: "Có, gói tự động gia hạn hàng ngày khi tài khoản đủ tiền." },
+      `<p>Tốc độ cao 4G trong 24h.</p>`,
+      `<p>Không gia hạn tự động.</p>`,
     ],
     similar_packages: [
-      { id: "pkg-102", name: "Gói Data Ngày D10", data: "2GB", price: 10000 },
-      { id: "pkg-103", name: "Gói Data Ngày D15", data: "3GB", price: 15000 },
+      { id: "pkg-102", name: "D10", data: "1GB", price: 10000 },
+      { id: "pkg-103", name: "D15", data: "2GB", price: 15000 },
     ],
     provider_info: {
       company: "Viettel Telecom",
@@ -71,35 +155,23 @@ export const mockServicePackageDetails: ServicePackageDetail[] = [
     },
   },
 
-  // --- GÓI COMBO ---
+  // === GÓI COMBO ===
   {
     id: "pkg-201",
     package_name: "Gói Combo 5G135N",
     price: 135000,
     duration_months: 1,
-    description:
-      "Gói 5G135N là gói data ưu đãi của Viettel, cung cấp dung lượng lớn cùng ưu đãi truy cập miễn phí các mạng xã hội phổ biến.",
-    data_info: "6GB/ngày (180GB/tháng)",
-    syntax_register: "5G135N gửi 191",
-    terms: [
-      "Áp dụng cho thuê bao di động trả trước và trả sau của Viettel.",
-      "Hết dung lượng hệ thống dừng kết nối để đảm bảo không phát sinh phí.",
-    ],
+    description: `<p>Gói <strong>5G135N</strong> cung cấp <em>6GB/ngày</em> (tổng 180GB/tháng), miễn phí truy cập Facebook, YouTube, TikTok.</p>`,
+    data_info: `<p><strong>180GB (6GB/ngày)</strong></p>`,
+    syntax_register: `<p><code>5G135N LUON gửi 290</code></p>`,
     benefits: [
-      "Miễn phí truy cập Facebook, YouTube, TikTok.",
-      "Dung lượng 6GB/ngày trong 30 ngày.",
-      "Tặng thêm 2GB khi đăng ký qua MyViettel app.",
-    ],
-    questions: [
-      {
-        question: "Sau khi hết 6GB/ngày có bị trừ tiền không?",
-        answer: "Không, gói sẽ ngắt truy cập để tránh phát sinh cước vượt gói.",
-      },
-      { question: "Có thể đăng ký lại trước khi hết hạn không?", answer: "Có, bạn có thể đăng ký lại bất kỳ lúc nào." },
+      `<p>Miễn phí Facebook, YouTube, TikTok.</p>`,
+      `<p>Tốc độ cao 4G/5G trong 30 ngày.</p>`,
+      `<p>Tặng 2GB khi đăng ký qua MyViettel.</p>`,
     ],
     similar_packages: [
-      { id: "pkg-202", name: "Gói Combo TikTok + YouTube", data: "10GB", price: 79000 },
-      { id: "pkg-101", name: "Gói Data Ngày D5", data: "1GB/ngày", price: 5000 },
+      { id: "pkg-202", name: "Combo TikTok + YouTube", data: "5GB", price: 79000 },
+      { id: "pkg-203", name: "Combo Facebook + Instagram", data: "6GB", price: 89000 },
     ],
     provider_info: {
       company: "Viettel Telecom",
