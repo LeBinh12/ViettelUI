@@ -9,6 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 // import { PrivateRoute, PublicRoute } from "./routes/Guard";
 import { useLoadUser } from "./hooks/useLoadUser";
+import DashboardScreen from "./page/DashboardScreen";
+import AdminLayout from "./layouts/AdminLayout";
+import UsersScreen from "./page/UsersScreen";
+import ProductScreen from "./page/PackageScreen";
 
 function App() {
   useLoadUser();
@@ -39,6 +43,12 @@ function App() {
           <Route path="/home" element={<HomeScreen />} />
 
           <Route path="/package/:id" element={<PackageDetail />} />
+        </Route>
+        <Route element={<AdminLayout />}> 
+          <Route path="/admin" element={<DashboardScreen />} />
+          <Route path="/admin/dashboard" element={<DashboardScreen />} />
+          <Route path="/admin/users" element={<UsersScreen />} />
+          <Route path="/admin/products" element={<ProductScreen />} />
         </Route>
       </Routes>
 

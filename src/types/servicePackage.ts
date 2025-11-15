@@ -5,6 +5,5 @@ export interface ServicePackage {
   duration_months: number;
   create_date: string;
   update_date: string;
-
   category_id?: string; 
 }
