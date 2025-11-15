@@ -11,7 +11,12 @@ import PaymentPage from "./page/PaymentPage";
 import { InvoiceManagement } from "./page/InvoiceManagement";
 // import { PrivateRoute, PublicRoute } from "./routes/Guard";
 import { useLoadUser } from "./hooks/useLoadUser";
+import DashboardScreen from "./page/DashboardScreen";
+import AdminLayout from "./layouts/AdminLayout";
+import UsersScreen from "./page/UsersScreen";
+import ProductScreen from "./page/PackageScreen";
 import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
+
 function App() {
   useLoadUser();
   return (
@@ -44,6 +49,12 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/InvoiceManagement" element={<InvoiceManagement />} />
           <Route path="/confirm-payment" element={<ConfirmPaymentPage />} />
+        </Route>
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<DashboardScreen />} />
+          <Route path="/admin/dashboard" element={<DashboardScreen />} />
+          <Route path="/admin/users" element={<UsersScreen />} />
+          <Route path="/admin/products" element={<ProductScreen />} />
         </Route>
       </Routes>
 
