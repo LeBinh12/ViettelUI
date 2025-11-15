@@ -1,5 +1,7 @@
-interface DeletePackageFormProps {
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
+interface DeletePackageFormProps {
     onClose: () => void;
     onConfirm: () => void;
     name: string;
@@ -7,43 +9,48 @@ interface DeletePackageFormProps {
 }
 
 const DeletePackageForm: React.FC<DeletePackageFormProps> = ({ isOpen, name, onClose, onConfirm }) => {
-    if (!isOpen) return null;
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-            {/* Overlay mờ */}
-            <div
-                className="absolute inset-0 bg-black bg-opacity-40"
-                onClick={onClose} // Click ngoài modal để đóng
-            ></div>
-
-            {/* Hộp xác nhận */}
-            <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                    Xác nhận xóa
-                </h2>
-                <p className="text-gray-600 mb-6">
-                    Bạn có chắc chắn muốn xóa goi dich vu {" "}
-                    <span className="font-semibold text-red-500">{name}</span>?
-                    Hành động này không thể hoàn tác.
-                </p>
-
-                {/* Nút hành động */}
-                <div className="flex justify-end space-x-3">
-                    <button
-                        onClick={onClose}
-                        className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg transition"
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                >
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 border border-gray-200 relative"
                     >
-                        Hủy
-                    </button>
-                    <button
-                        onClick={onConfirm}
-                        className="px-4 py-2 rounded-lg text-white bg-red-600 hover:bg-red-700 transition"
-                    >
-                        Xóa
-                    </button>
-                </div>
-            </div>
-        </div>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">Xác nhận xóa</h2>
+                        <p className="text-gray-600 mb-6 text-center">
+                            Bạn có chắc chắn muốn xóa gói dịch vụ
+                            <span className="font-semibold text-red-500"> {name}</span>?<br />
+                            Hành động này không thể hoàn tác.
+                        </p>
+
+                        <div className="flex justify-center gap-4 mt-4">
+                            <button
+                                onClick={onClose}
+                                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition"
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                onClick={onConfirm}
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                            >
+                                Xóa
+                            </button>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
+
 export default DeletePackageForm;
