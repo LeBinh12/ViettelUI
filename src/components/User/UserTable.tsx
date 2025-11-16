@@ -25,13 +25,22 @@ const UserTable: React.FC<Props> = ({ users, onEdit, onDelete }) => {
         </thead>
         <tbody>
           {users.map((u) => (
-            <tr key={u.id} className="border-b hover:bg-gray-50 transition-colors">
+            <tr
+              key={u.id}
+              className="border-b hover:bg-gray-50 transition-colors"
+            >
               <td className="py-2 px-4">{u.id}</td>
               <td className="py-2 px-4">{u.name}</td>
               <td className="py-2 px-4">{u.email}</td>
               <td className="py-2 px-4">{u.phone}</td>
               <td className="py-2 px-4">{u.packageName}</td>
-              <td className={`py-2 px-4 font-semibold ${u.status === "Đang hoạt động" ? "text-green-600" : "text-red-600"}`}>
+              <td
+                className={`py-2 px-4 font-semibold ${
+                  u.status === "Đang hoạt động"
+                    ? "text-green-600"
+                    : "text-red-600"
+                }`}
+              >
                 {u.status}
               </td>
               <td className="py-2 px-4 flex justify-center gap-3">

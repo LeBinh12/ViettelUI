@@ -54,11 +54,26 @@ const UserScreen: React.FC = () => {
         </button>
       </div>
 
-      <UserTable users={users} onEdit={setUpdateUser} onDelete={handleDeleteClick} />
+      <UserTable
+        users={users}
+        onEdit={setUpdateUser}
+        onDelete={handleDeleteClick}
+      />
 
-      {showAddModal && <AddUserForm onClose={() => setShowAddModal(false)} onSubmit={handleAddUser} />}
+      {showAddModal && (
+        <AddUserForm
+          onClose={() => setShowAddModal(false)}
+          onSubmit={handleAddUser}
+        />
+      )}
 
-      {updateUser && <UpdateUserForm user={updateUser} onClose={() => setUpdateUser(null)} onSubmit={handleUpdateUser} />}
+      {updateUser && (
+        <UpdateUserForm
+          user={updateUser}
+          onClose={() => setUpdateUser(null)}
+          onSubmit={handleUpdateUser}
+        />
+      )}
 
       {showDeleteModal && (
         <DeleteUserForm

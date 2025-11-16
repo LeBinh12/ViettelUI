@@ -8,3 +8,18 @@ export interface User {
     endDate: string;       // YYYY-MM-DD
     status: "Đang hoạt động" | "Hết hạn";
 }
+
+export interface UserDTO {
+    isValid: boolean,
+    id: string,
+    username: string,
+    email: string,
+    role: string
+}
+
+export interface UserResponse {
+    status: number,
+    message: string,
+    data: UserDTO,
+    code: number
+}
