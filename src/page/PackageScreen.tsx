@@ -5,8 +5,13 @@ import ServicePackageTable from "../components/Package/ServicePackageTable";
 import AddPackageForm from "../components/Package/AddPackageForm";
 import UpdatePackageForm from "../components/Package/UpdatePackageForm";
 import DeletePackageForm from "../components/Package/DeletePackageForm";
-import type { ServicePackageDTO } from "../types/servicePackage";
+import type {
+  ServicePackageAddRequest,
+  ServicePackageDTO,
+  ServicePackageUpdateRequest,
+} from "../types/servicePackage";
 import { servicePackageApi } from "../api";
+import { toast } from "react-toastify";
 
 const PackageScreen: React.FC = () => {
   const [packages, setPackages] = useState<ServicePackageDTO[]>([]);
@@ -41,42 +46,44 @@ const PackageScreen: React.FC = () => {
     fetchPackages();
   }, []);
 
-  // 👉 Thêm gói dịch vụ
-  const handleAddPackage = (newPackage: any) => {
-    const newItem: ServicePackageDTO = {
-      id: (packages.length + 1).toString(),
-      packageName: newPackage.packageName,
-      description: newPackage.description,
-      price: newPackage.price,
-      durationMonths: newPackage.durationMonths,
-      categoryName: "Danh mục " + newPackage.category_id,
-    };
-
-    setPackages((prev) => [...prev, newItem]);
+  // Thêm gói dịch vụ
+  const handleAddPackage = async (req: ServicePackageAddRequest) => {
+    try {
+      const res = await servicePackageApi.add(req);
+      if (res.succeeded) {
+        setPackages((prev) => [...prev, res.data]);
+        toast.success("Thêm gói dịch vụ thnhf công!");
+        setShowForm(false);
+      }
+    } catch (err) {
+      console.error("Failed to add package", err);
+    }
   };
 
-  // 👉 Chọn gói để sửa
+  // Chọn gói để sửa
   const handleEdit = (pkg: ServicePackageDTO) => {
     setUpdatePackage(pkg);
   };
 
-  // 👉 Cập nhật gói
-  const handleUpdatePackage = (updated: any) => {
-    setPackages((prev) =>
-      prev.map((p) =>
-        p.id === updatePackage?.id
-          ? {
-              ...p,
-              packageName: updated.packageName,
-              description: updated.description,
-              price: updated.price,
-              durationMonths: updated.durationMonths,
-              categoryName: "Danh mục " + updated.category_id,
-            }
-          : p
-      )
-    );
-    setUpdatePackage(null);
+  // Cập nhật gói
+  const handleUpdatePackage = async (updated: ServicePackageUpdateRequest) => {
+    try {
+      const res = await servicePackageApi.update(updated); // gọi API
+
+      if (res.succeeded) {
+        const updatedPkg = res.data; // object ServicePackageDTO
+
+        setPackages((prev) =>
+          prev.map((p) => (p.id === updatedPkg.id ? updatedPkg : p))
+        );
+
+        toast.success("Cập nhật gói dịch vụ thành công!");
+        setUpdatePackage(null);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Cập nhật thất bại");
+    }
   };
 
   // 👉 Mở modal xóa
@@ -88,17 +95,28 @@ const PackageScreen: React.FC = () => {
     }
   };
 
-  // 👉 Xác nhận xóa
-  const handleDeletePackage = () => {
+  // Xác nhận xóa
+  const handleDeletePackage = async () => {
     if (!selectedPackage) return;
     setDeleting(true);
-
-    setTimeout(() => {
-      setPackages((prev) => prev.filter((p) => p.id !== selectedPackage.id));
-      setShowDeleteModal(false);
-      setSelectedPackage(null);
+    console.log("selectedPackage.id", selectedPackage.id);
+    try {
+      const res = await servicePackageApi.delete(selectedPackage.id); // gọi API delete
+      console.log("res", res);
+      if (res.succeeded && res.data) {
+        setPackages((prev) => prev.filter((p) => p.id !== selectedPackage.id));
+        toast.success("Xóa gói dịch vụ thành công!");
+        setShowDeleteModal(false);
+        setSelectedPackage(null);
+      } else {
+        toast.error("Xóa thất bại!");
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error("Xóa thất bại!");
+    } finally {
       setDeleting(false);
-    }, 600);
+    }
   };
 
   return (

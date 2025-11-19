@@ -1,9 +1,6 @@
 import axiosClient from "../utils/axiosClient";
-import type { ServicePackage, ServicePackageResponse } from "../types/servicePackage";
-import { mockServicePackages } from "../data/mock/servicePackage.mock";
+import type { ServicePackageAddRequest, ServicePackageAddResponse, ServicePackageByIdResponse, ServicePackageDeleteResponse, ServicePackageResponse, ServicePackageUpdateRequest } from "../types/servicePackage";
 import { API_URL } from "../config/config";
-
-const USE_MOCK = true; //  Đổi sang false khi có API thật
 
 export const servicePackageApi = {
 
@@ -14,26 +11,29 @@ export const servicePackageApi = {
     return response.data
   },
 
-
-  // Lấy theo category_id
-  async getByCategory(categoryId: string): Promise<ServicePackage[]> {
-    if (USE_MOCK) {
-      await new Promise((r) => setTimeout(r, 300));
-      return mockServicePackages.filter((p) => p.category_id === categoryId);
-    }
-
-    const res = await axiosClient.get(`/service-packages?category_id=${categoryId}`);
-    return res.data;
+  getById: async (id: string): Promise<ServicePackageByIdResponse> => {
+    const response = await axiosClient.get<ServicePackageByIdResponse>(`${API_URL}/ServicePackage/get-by-id/${id}`);
+    return response.data
   },
 
-  // Lấy chi tiết 1 gói (nếu backend trả chung trong list)
-  async getById(id: string): Promise<ServicePackage | null> {
-    if (USE_MOCK) {
-      await new Promise((r) => setTimeout(r, 300));
-      return mockServicePackages.find((p) => p.id === id) || null;
-    }
-
-    const res = await axiosClient.get(`/service-packages/${id}`);
-    return res.data;
+  getByCategory: async (id: string): Promise<ServicePackageResponse> => {
+    const response = await axiosClient.get<ServicePackageResponse>(`${API_URL}/ServicePackage/get-by-category/${id}`);
+    return response.data
   },
+
+  add: async (req: ServicePackageAddRequest): Promise<ServicePackageAddResponse> => {
+    const response = await axiosClient.post<ServicePackageAddResponse>(`${API_URL}/ServicePackage/add`, req);
+    return response.data
+  },
+
+  update: async (req: ServicePackageUpdateRequest): Promise<ServicePackageAddResponse> => {
+    const response = await axiosClient.post<ServicePackageAddResponse>(`${API_URL}/ServicePackage/update/${req.id}`, req);
+    return response.data
+  },
+
+  delete: async (id: string): Promise<ServicePackageDeleteResponse> => {
+    const response = await axiosClient.post<ServicePackageDeleteResponse>(`${API_URL}/ServicePackage/delete/${id}`);
+    return response.data
+  },
+
 };

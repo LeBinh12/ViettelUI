@@ -23,3 +23,4 @@ export interface UserResponse {
     data: UserDTO,
     code: number
 }
+

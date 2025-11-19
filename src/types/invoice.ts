@@ -5,3 +5,11 @@ export interface Invoice {
     date: string;
     status: 'Paid' | 'Pending' | 'Cancelled';
 }
+
+
+export interface InvoicePaymentCallback {
+    message: string,
+    succeeded: boolean,
+    data: boolean,
+    code: number,
+}

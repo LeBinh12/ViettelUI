@@ -21,13 +21,8 @@ const PackageCard: React.FC<PackageCardProps> = ({
 
   return (
     <div className="bg-white border border-gray-200 rounded-3xl shadow-md hover:shadow-lg transition-transform hover:scale-[1.03] p-6 flex flex-col items-center max-w-[340px] w-full mx-auto">
-      {/* Header label */}
-      <div className="self-start bg-red-600 text-white text-base font-semibold rounded-br-xl rounded-tl-xl px-4 py-1.5 mb-4 shadow-sm">
-        {id.toUpperCase()}
-      </div>
-
       {/* Dung lượng */}
-      <h3 className="text-4xl font-extrabold text-red-600 mb-2 flex items-center whitespace-nowrap">
+      <h3 className="text-xl font-extrabold text-red-600 mb-2 flex items-center whitespace-nowrap">
         {data}
         <span className="text-lg text-gray-800 ml-2">
           {isDay || duration_months === 0 ? "/ ngày" : "/ tháng"}
@@ -38,7 +33,10 @@ const PackageCard: React.FC<PackageCardProps> = ({
 
       {/* MXH icons */}
       <div className="flex justify-center space-x-5 mb-5 text-red-600">
-        <FaFacebook size={28} className="hover:scale-110 transition-transform" />
+        <FaFacebook
+          size={28}
+          className="hover:scale-110 transition-transform"
+        />
         <FaYoutube size={28} className="hover:scale-110 transition-transform" />
         <FaTiktok size={28} className="hover:scale-110 transition-transform" />
       </div>
@@ -53,10 +51,12 @@ const PackageCard: React.FC<PackageCardProps> = ({
         </span>
       </div>
 
-
       {/* Nút */}
       <div className="flex w-full gap-3 mt-auto">
-        <button className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 text-lg font-medium transition"  onClick={() => navigate(`/payment`)}>
+        <button
+          className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 text-lg font-medium transition"
+          onClick={() => navigate(`/payment`)}
+        >
           Đăng ký
         </button>
         <button

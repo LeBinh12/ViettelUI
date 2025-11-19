@@ -2,12 +2,15 @@
 export interface Plan {
     name: string;
     cents: number;
+    durationMonths?: number; // thêm optional nếu không phải plan nào cũng có
+    packageID: string;
 }
 export type PaymentMethod = 'credit_card' | 'bank_transfer' | 'paypal' | 'momo' | 'vnpay' | 'qr';
 
 export interface CustomerInfo {
     name: string;
     phone: string;
+    address: string;
     email: string;
 }
 

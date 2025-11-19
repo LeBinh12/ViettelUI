@@ -6,15 +6,6 @@ const USE_MOCK = true; //  Đổi sang false khi có API thật
 
 export const servicePackageDetailApi = {
 
-
-  getProfile: async (token: string): Promise<UserResponse> => {
-    console.log("data", `${API_URL}/UserAccount/validate?${token}`)
-    const response = await axiosClient.get<UserResponse>(`${API_URL}/UserAccount/validate?token=${token}`);
-    return response.data
-  },
-
-
-
   // Lấy chi tiết theo id
   async getById(id: string): Promise<ServicePackageDetail | null> {
     if (USE_MOCK) {

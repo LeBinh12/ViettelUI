@@ -1,115 +1,165 @@
 import React, { useState } from "react";
-import type { User } from "../../types/user";
+import { motion, AnimatePresence } from "framer-motion";
+import type { Customer } from "../../types/customer";
+import { customerApi } from "../../api/customerApi";
+import { toast } from "react-toastify";
 
 interface Props {
-  user: User;
+  customer: Customer;
   onClose: () => void;
-  onSubmit: (data: Partial<Omit<User, "id">>) => void;
+  onSubmit: (updatedCustomer: Customer) => void; // trả về customer vừa update
 }
 
-const UpdateUserForm: React.FC<Props> = ({ user, onClose, onSubmit }) => {
-  const [formData, setFormData] = useState<Partial<Omit<User, "id">>>({
-    ...user,
+const UpdateCustomerForm: React.FC<Props> = ({
+  customer,
+  onClose,
+  onSubmit,
+}) => {
+  const [formData, setFormData] = useState({
+    fullName: customer.fullName,
+    email: customer.email,
+    phone: customer.phone,
+    address: customer.address,
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
+    if (!formData.fullName || !formData.email) {
       alert("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
-    onSubmit(formData);
-    onClose();
+
+    try {
+      setLoading(true);
+      const res = await customerApi.update(
+        {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+        },
+        customer.id
+      );
+
+      if (res.succeeded && res.data) {
+        toast.success("Cập nhật khách hàng thành công!");
+        onSubmit(res.data); // trả về customer mới để update state
+        onClose();
+      } else {
+        toast.error(res.message || "Cập nhật thất bại!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Lỗi cập nhật khách hàng!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          Cập nhật người dùng
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-            required
-          />
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-          />
-          <input
-            type="text"
-            name="packageName"
-            value={formData.packageName}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-          />
-          <div className="grid grid-cols-2 gap-4">
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-              className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="date"
-              name="endDate"
-              value={formData.endDate}
-              onChange={handleChange}
-              className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-            />
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-black/40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        <motion.div
+          className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl p-6 mx-4 grid grid-cols-2 gap-6"
+          initial={{ scale: 0.85, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.85, opacity: 0, y: 20 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2 className="col-span-2 text-2xl font-semibold mb-6 text-center text-gray-900">
+            Cập nhật khách hàng
+          </h2>
+
+          <div className="space-y-4 col-span-2">
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Họ và tên
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Số điện thoại
+              </label>
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Địa chỉ
+              </label>
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                rows={3}
+              />
+            </div>
           </div>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
-          >
-            <option>Đang hoạt động</option>
-            <option>Hết hạn</option>
-          </select>
-          <div className="flex justify-end gap-3 mt-4">
+
+          <div className="col-span-2 flex justify-end gap-4 mt-6">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+              className="px-5 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition text-gray-800 font-semibold"
             >
               Hủy
             </button>
             <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              type="button"
+              onClick={handleSubmit}
+              disabled={loading}
+              className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
             >
-              Lưu
+              {loading ? "Đang cập nhật..." : "Lưu"}
             </button>
           </div>
-        </form>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
-export default UpdateUserForm;
+export default UpdateCustomerForm;
