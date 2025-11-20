@@ -1,62 +1,35 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Customer } from "../../types/customer";
-import { customerApi } from "../../api/customerApi";
-import { toast } from "react-toastify";
 
-interface Props {
+interface AddCustomerFormProps {
   onClose: () => void;
-  onSubmit: (newCustomer: Customer) => void; // trả về Customer vừa thêm
+  onSubmit: (data: any) => void;
 }
 
-const AddCustomerForm: React.FC<Props> = ({ onClose, onSubmit }) => {
-  const [form, setForm] = useState<Omit<Customer, "id" | "createdAt">>({
+const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onClose, onSubmit }) => {
+  const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phone: "",
     address: "",
   });
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.fullName || !form.email) {
+    if (!formData.fullName || !formData.email) {
       alert("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
-
-    try {
-      setLoading(true);
-      // map fullName -> fullName để đúng type CustomerAddRequest
-      const res = await customerApi.add({
-        fullName: form.fullName,
-        email: form.email,
-        phone: form.phone,
-        address: form.address,
-      });
-      console.log("res", res);
-
-      if (res.succeeded && res.data) {
-        toast.success("Thêm khách hàng thành công!");
-        onSubmit(res.data); // trả về customer mới để thêm vào list
-        onClose();
-      } else {
-        toast.error(res.message || "Thêm khách hàng thất bại!");
-      }
-    } catch (error) {
-      console.error("Lỗi", error);
-      toast.error("Lỗi thêm khách hàng: ");
-    } finally {
-      setLoading(false);
-    }
+    onSubmit(formData);
+    onClose();
   };
 
   return (
@@ -88,7 +61,7 @@ const AddCustomerForm: React.FC<Props> = ({ onClose, onSubmit }) => {
               <input
                 type="text"
                 name="fullName"
-                value={form.fullName}
+                value={formData.fullName}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Nhập họ và tên"
@@ -103,7 +76,7 @@ const AddCustomerForm: React.FC<Props> = ({ onClose, onSubmit }) => {
               <input
                 type="email"
                 name="email"
-                value={form.email}
+                value={formData.email}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Nhập email"
@@ -118,7 +91,7 @@ const AddCustomerForm: React.FC<Props> = ({ onClose, onSubmit }) => {
               <input
                 type="text"
                 name="phone"
-                value={form.phone}
+                value={formData.phone}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Nhập số điện thoại"
@@ -131,7 +104,7 @@ const AddCustomerForm: React.FC<Props> = ({ onClose, onSubmit }) => {
               </label>
               <textarea
                 name="address"
-                value={form.address}
+                value={formData.address}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                 placeholder="Nhập địa chỉ"
@@ -149,10 +122,9 @@ const AddCustomerForm: React.FC<Props> = ({ onClose, onSubmit }) => {
               </button>
               <button
                 type="submit"
-                disabled={loading}
                 className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
               >
-                {loading ? "Đang thêm..." : "Lưu"}
+                Lưu
               </button>
             </div>
           </form>

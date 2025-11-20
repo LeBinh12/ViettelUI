@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
 
-import type { Customer } from "../types/customer";
+import type { Customer, CustomerAddRequest } from "../types/customer";
 
 import UserTable from "../components/User/UserTable"; // đổi tên component nếu cần
 import AddUserForm from "../components/User/AddUserForm"; // bạn có thể copy & đổi thành AddCustomerForm
@@ -14,14 +14,15 @@ const CustomerScreen: React.FC = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [updateCustomer, setUpdateCustomer] = useState<Customer | null>(null);
+
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
     null
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  // const [deleting, setDeleting] = useState(false);
 
-  // 👉 Load dữ liệu từ API
   useEffect(() => {
     const fetchCustomers = async () => {
       setLoading(true);
@@ -29,8 +30,6 @@ const CustomerScreen: React.FC = () => {
         const res = await customerApi.getAll();
         if (res.succeeded) {
           setCustomers(res.data);
-        } else {
-          toast.error("Không thể tải dữ liệu khách hàng!");
         }
       } catch (error) {
         console.error("Error loading customers:", error);
@@ -42,6 +41,19 @@ const CustomerScreen: React.FC = () => {
 
     fetchCustomers();
   }, []);
+
+  const handleAddCustomer = async (req: CustomerAddRequest) => {
+    try {
+      const res = await customerApi.add(req);
+      if (res.succeeded) {
+        setCustomers((prev) => [...prev, res.data]);
+        toast.success("Thêm khách hàng thành công!");
+        setShowForm(false);
+      }
+    } catch (err) {
+      console.error("Failed to add customer", err);
+    }
+  };
 
   // Xóa customer
   const handleDeleteClick = (id: string) => {
@@ -82,7 +94,7 @@ const CustomerScreen: React.FC = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Quản lý khách hàng</h2>
         <button
-          onClick={() => setShowAddModal(true)}
+          onClick={() => setShowForm(true)}
           className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition"
         >
           <Plus size={18} /> Thêm khách hàng
@@ -93,18 +105,16 @@ const CustomerScreen: React.FC = () => {
         <p>Đang tải dữ liệu...</p>
       ) : (
         <UserTable
-          customers={customers} // giữ UserTable nhưng truyền Customer
+          customers={customers}
           onEdit={setUpdateCustomer}
           onDelete={handleDeleteClick}
         />
       )}
 
-      {showAddModal && (
+      {showForm && (
         <AddUserForm
-          onClose={() => setShowAddModal(false)}
-          onSubmit={(newCustomer: Customer) => {
-            setCustomers((prev) => [...prev, newCustomer]);
-          }}
+          onClose={() => setShowForm(false)}
+          onSubmit={handleAddCustomer}
         />
       )}
 
