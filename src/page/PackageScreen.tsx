@@ -52,7 +52,7 @@ const PackageScreen: React.FC = () => {
       const res = await servicePackageApi.add(req);
       if (res.succeeded) {
         setPackages((prev) => [...prev, res.data]);
-        toast.success("Thêm gói dịch vụ thnhf công!");
+        toast.success("Thêm gói dịch vụ thành công!");
         setShowForm(false);
       }
     } catch (err) {
@@ -122,17 +122,33 @@ const PackageScreen: React.FC = () => {
   return (
     <div className="p-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      {/* <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">
           Quản lý gói dịch vụ
         </h2>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white 
+             bg-gradient-to-r from-indigo-500 to-indigo-600 
+             shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-indigo-700 
+             transition-all duration-300"
+        >
+          <Plus size={18} /> Thêm gói dịch vụ
+        </button>
+
+      </div> */}
+      <div className="flex justify-end mb-6">
+        <button
+          onClick={() => setShowForm(true)}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white 
+               bg-gradient-to-r from-indigo-500 to-indigo-600 
+               shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-indigo-700 
+               transition-all duration-300"
         >
           <Plus size={18} /> Thêm gói dịch vụ
         </button>
       </div>
+
 
       {/* Loading */}
       {loading ? (

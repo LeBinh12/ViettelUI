@@ -11,10 +11,34 @@ import {
 
 const DashboardScreen: React.FC = () => {
   const stats = [
-    { label: "Sản phẩm", value: 120, color: "bg-blue-500", textColor: "text-white" },
-    { label: "Người dùng", value: 540, color: "bg-green-500", textColor: "text-white" },
-    { label: "Đơn hàng", value: 87, color: "bg-yellow-400", textColor: "text-gray-800" },
-    { label: "Doanh thu", value: "₫120,000,000", color: "bg-red-500", textColor: "text-white" },
+    {
+      label: "Sản phẩm",
+      value: 120,
+      // icon: <Package size={26} className="text-indigo-600" />,
+      color: "bg-indigo-50",
+      textColor: "text-indigo-700",
+    },
+    {
+      label: "Người dùng",
+      value: 540,
+      // icon: <Users size={26} className="text-emerald-600" />,
+      color: "bg-emerald-50",
+      textColor: "text-emerald-700",
+    },
+    {
+      label: "Đơn hàng",
+      value: 87,
+      // icon: <ShoppingBag size={26} className="text-amber-600" />,
+      color: "bg-amber-50",
+      textColor: "text-amber-700",
+    },
+    {
+      label: "Doanh thu",
+      value: "₫120,000,000",
+      // icon: <DollarSign size={26} className="text-rose-600" />,
+      color: "bg-rose-50",
+      textColor: "text-rose-700",
+    },
   ];
 
   const chartData = [
@@ -28,17 +52,26 @@ const DashboardScreen: React.FC = () => {
 
   return (
     <div className="space-y-8 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Bảng điều khiển</h2>
 
       {/* Thống kê tổng quan */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((item) => (
           <div
             key={item.label}
-            className={`shadow rounded-2xl p-6 flex flex-col items-center justify-center hover:shadow-md transition ${item.color}`}
+            className={`rounded-2xl p-6 shadow-sm hover:shadow-md transition flex flex-col items-center justify-center ${item.color}`}
           >
-            <p className={`text-sm ${item.textColor}`}>{item.label}</p>
-            <p className={`text-2xl font-semibold mt-2 ${item.textColor}`}>
+            {/* Icon */}
+            <div className="mb-3">
+              {item.icon}
+            </div>
+
+            {/* Label */}
+            <p className={`text-sm font-medium ${item.textColor}`}>
+              {item.label}
+            </p>
+
+            {/* Value */}
+            <p className={`text-3xl font-semibold mt-2 ${item.textColor}`}>
               {item.value}
             </p>
           </div>
@@ -47,17 +80,19 @@ const DashboardScreen: React.FC = () => {
 
       {/* Biểu đồ doanh thu */}
       <div className="bg-white shadow rounded-2xl p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Doanh thu theo tháng
         </h3>
+
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={chartData}
             margin={{ top: 20, right: 30, left: 0, bottom: 20 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <XAxis dataKey="month" stroke="#6B7280" />
             <YAxis
+              stroke="#6B7280"
               tickFormatter={(value) =>
                 new Intl.NumberFormat("vi-VN", {
                   style: "currency",
@@ -72,8 +107,14 @@ const DashboardScreen: React.FC = () => {
                   currency: "VND",
                 }).format(value)
               }
+              contentStyle={{ borderRadius: 10, borderColor: "#E5E7EB" }}
             />
-            <Bar dataKey="revenue" fill="#1D4ED8" radius={[6, 6, 0, 0]} barSize={40} />
+            <Bar
+              dataKey="revenue"
+              fill="#6366F1"
+              radius={[8, 8, 0, 0]}
+              barSize={42}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>
