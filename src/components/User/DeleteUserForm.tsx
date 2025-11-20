@@ -1,14 +1,14 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Props {
+interface DeleteCustomerFormProps {
   isOpen: boolean;
   name: string;
   onClose: () => void;
   onConfirm: () => void;
 }
 
-const DeleteUserForm: React.FC<Props> = ({ isOpen, name, onClose, onConfirm }) => {
+const DeleteUserForm: React.FC<DeleteCustomerFormProps> = ({ isOpen, name, onClose, onConfirm }) => {
   return (
     <AnimatePresence>
       {isOpen && (

@@ -99,7 +99,7 @@ const PackageScreen: React.FC = () => {
   const handleDeletePackage = async () => {
     if (!selectedPackage) return;
     setDeleting(true);
-    console.log("selectedPackage.id", selectedPackage.id);
+    // console.log("selectedPackage.id", selectedPackage.id);
     try {
       const res = await servicePackageApi.delete(selectedPackage.id); // gọi API delete
       console.log("res", res);
@@ -109,7 +109,7 @@ const PackageScreen: React.FC = () => {
         setShowDeleteModal(false);
         setSelectedPackage(null);
       } else {
-        toast.error("Xóa thất bại!");
+        toast.error(res.message || "Xóa thất bại!");
       }
     } catch (error) {
       console.error("Delete failed:", error);

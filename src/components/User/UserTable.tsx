@@ -2,14 +2,14 @@ import React from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import type { Customer } from "../../types/customer";
 
-interface Props {
+interface CustomerTableProps {
   customers: Customer[];
   onEdit: (user: Customer) => void;
   onDelete: (id: string) => void;
 }
 
-const UserTable: React.FC<Props> = ({ customers, onEdit, onDelete }) => {
-  console.log("Customer", customers);
+const UserTable: React.FC<CustomerTableProps> = ({ customers, onEdit, onDelete }) => {
+  // console.log("Customer", customers);
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">

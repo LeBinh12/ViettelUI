@@ -1,68 +1,46 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Customer } from "../../types/customer";
-import { customerApi } from "../../api/customerApi";
-import { toast } from "react-toastify";
 
-interface Props {
-  customer: Customer;
+interface UpdateCustomerFormProps {
+  customer: any;
   onClose: () => void;
-  onSubmit: (updatedCustomer: Customer) => void; // trả về customer vừa update
+  onSubmit: (data: any) => void;
 }
 
-const UpdateCustomerForm: React.FC<Props> = ({
+const UpdateCustomerForm: React.FC<UpdateCustomerFormProps> = ({
   customer,
   onClose,
   onSubmit,
 }) => {
   const [formData, setFormData] = useState({
-    fullName: customer.fullName,
-    email: customer.email,
-    phone: customer.phone,
-    address: customer.address,
+    fullName: customer.fullName || "",
+    email: customer.email || "",
+    phone: customer.phone || "",
+    address: customer.address || "",
   });
 
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.email) {
-      alert("Vui lòng nhập đầy đủ thông tin!");
-      return;
-    }
 
-    try {
-      setLoading(true);
-      const res = await customerApi.update(
-        {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-        },
-        customer.id
-      );
-
-      if (res.succeeded && res.data) {
-        toast.success("Cập nhật khách hàng thành công!");
-        onSubmit(res.data); // trả về customer mới để update state
-        onClose();
-      } else {
-        toast.error(res.message || "Cập nhật thất bại!");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Lỗi cập nhật khách hàng!");
-    } finally {
-      setLoading(false);
-    }
+    onSubmit({
+      id: customer.id,
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+    });
+    onClose();
   };
 
   return (
@@ -150,10 +128,9 @@ const UpdateCustomerForm: React.FC<Props> = ({
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={loading}
               className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
             >
-              {loading ? "Đang cập nhật..." : "Lưu"}
+              Cập nhật
             </button>
           </div>
         </motion.div>

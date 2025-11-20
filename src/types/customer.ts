@@ -21,6 +21,14 @@ export interface CustomerAddRequest {
     address: string,
 }
 
+export interface CustomerUpdateRequest {
+    id: string,
+    email: string,
+    fullName: string,
+    phone: string,
+    address: string,
+}
+
 
 export interface CustomerAddResponse {
     message: string,

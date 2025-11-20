@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
 
-import type { Customer, CustomerAddRequest } from "../types/customer";
+import type { Customer, CustomerAddRequest, CustomerUpdateRequest } from "../types/customer";
 
 import UserTable from "../components/User/UserTable"; // đổi tên component nếu cần
 import AddUserForm from "../components/User/AddUserForm"; // bạn có thể copy & đổi thành AddCustomerForm
 import UpdateUserForm from "../components/User/UpdateUserForm"; // đổi thành UpdateCustomerForm
 import DeleteUserForm from "../components/User/DeleteUserForm"; // đổi thành DeleteCustomerForm
 import { customerApi } from "../api/customerApi";
+
 
 const CustomerScreen: React.FC = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -21,7 +22,7 @@ const CustomerScreen: React.FC = () => {
     null
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  // const [deleting, setDeleting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -33,7 +34,6 @@ const CustomerScreen: React.FC = () => {
         }
       } catch (error) {
         console.error("Error loading customers:", error);
-        toast.error("Lỗi tải dữ liệu khách hàng!");
       } finally {
         setLoading(false);
       }
@@ -55,27 +55,48 @@ const CustomerScreen: React.FC = () => {
     }
   };
 
+  const handleEdit = (customer: Customer) => {
+    setUpdateCustomer(customer);
+  };
+
+  const handleUpdateCustomer = async (updated: CustomerUpdateRequest) => {
+    try {
+      const res = await customerApi.update(updated, updated.id); // gọi API
+      if (res.succeeded) {
+        setCustomers((prev) =>
+          prev.map((c) => (c.id === updated.id ? res.data : c))
+        );
+        toast.success("Cập nhật khách hàng thành công!");
+        setUpdateCustomer(null);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Cập nhật thất bại");
+    }
+  };
+
+
   // Xóa customer
   const handleDeleteClick = (id: string) => {
-    const cust = customers.find((c) => c.id === id);
-    if (cust) {
-      setSelectedCustomer(cust);
+    const customer = customers.find((c) => c.id === id);
+    if (customer) {
+      setSelectedCustomer(customer);
       setShowDeleteModal(true);
     }
   };
 
   const handleDeleteCustomer = async () => {
     if (!selectedCustomer) return;
-
+    setDeleting(true);
     try {
-      setLoading(true);
       const res = await customerApi.delete(selectedCustomer.id);
-
       if (res.succeeded) {
         setCustomers((prev) =>
           prev.filter((c) => c.id !== selectedCustomer.id)
         );
         toast.success("Xóa khách hàng thành công!");
+        setShowDeleteModal(false);
+        setSelectedCustomer(null);
       } else {
         toast.error(res.message || "Xóa khách hàng thất bại!");
       }
@@ -83,9 +104,7 @@ const CustomerScreen: React.FC = () => {
       console.error(error);
       toast.error("Lỗi xóa khách hàng!");
     } finally {
-      setShowDeleteModal(false);
-      setSelectedCustomer(null);
-      setLoading(false);
+      setDeleting(false);
     }
   };
 
@@ -106,7 +125,7 @@ const CustomerScreen: React.FC = () => {
       ) : (
         <UserTable
           customers={customers}
-          onEdit={setUpdateCustomer}
+          onEdit={handleEdit}
           onDelete={handleDeleteClick}
         />
       )}
@@ -122,13 +141,7 @@ const CustomerScreen: React.FC = () => {
         <UpdateUserForm
           customer={updateCustomer}
           onClose={() => setUpdateCustomer(null)}
-          onSubmit={(updatedCustomer: Customer) => {
-            setCustomers((prev) =>
-              prev.map((c) =>
-                c.id === updatedCustomer.id ? updatedCustomer : c
-              )
-            );
-          }}
+          onSubmit={handleUpdateCustomer}
         />
       )}
 
