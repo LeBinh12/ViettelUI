@@ -276,7 +276,10 @@ export default function PaymentPage(): React.JSX.Element {
                         <button onClick={() => handleSelectSimilarPackage(pkg.id)} className="flex-1 py-2.5 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-600 hover:shadow-lg active:scale-95 transition-all duration-200">
                           Đăng ký
                         </button>
-                        <button className="flex-1 py-2.5 border-2 border-gray-200 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 hover:border-gray-300 active:scale-95 transition-all duration-200">
+                        <button
+                          onClick={() => window.location.href = `/package/${pkg.id}`}
+                          className="flex-1 py-2.5 border-2 border-gray-200 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 hover:border-gray-300 active:scale-95 transition-all duration-200"
+                        >
                           Chi tiết
                         </button>
                       </div>
