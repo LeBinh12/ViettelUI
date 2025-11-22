@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import PackageCard from "../components/Package/PackageCard";
-import { Wallet, Clock, Wifi, MessageSquareText } from "lucide-react";
+import { Wallet, Clock, Wifi, MessageSquareText, ArrowLeft } from "lucide-react";
 import { servicePackageApi } from "../api";
 import type { ServicePackageDTO } from "../types/servicePackage";
 
@@ -34,183 +33,189 @@ const PackageDetail: React.FC = () => {
 
     fetchPackage();
   }, [id]);
+
   if (notFound) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/4076/4076503.png"
-          alt="Not found"
-          className="w-40 mb-6 opacity-80"
-        />
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          Gói cước không tồn tại
-        </h1>
-        <p className="text-gray-500 mb-6">
-          Có thể gói này đã bị gỡ hoặc bạn nhập sai đường dẫn.
-        </p>
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-[#d6001c] text-white font-bold rounded-full px-8 py-3 hover:bg-[#b80019] transition-all duration-300"
-        >
-          Quay lại
-        </button>
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-50">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
+          <div className="w-32 h-32 bg-red-100 rounded-full flex items-center justify-center mb-6">
+            <span className="text-6xl">📦</span>
+          </div>
+          <h1 className="text-4xl font-bold text-gray-800 mb-3">
+            Gói cước không tồn tại
+          </h1>
+          <p className="text-gray-600 mb-8 max-w-md">
+            Có thể gói này đã bị gỡ hoặc bạn nhập sai đường dẫn.
+          </p>
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-full px-10 py-4 hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Quay lại
+          </button>
+        </div>
       </div>
     );
   }
 
-  if (!pkgDetail) return null;
+  if (!pkgDetail) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 font-semibold">Đang tải...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 pb-28">
-      {/* Tiêu đề */}
-      <h1 className="text-4xl font-bold mb-8">
-        <span className="text-red-600">{pkgDetail.packageName}</span>
-      </h1>
-
-      {/* --- SECTION 1: TÓM TẮT --- */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        <SummaryCard
-          icon={<Wallet className="w-6 h-6 text-[#d6001c]" />}
-          label="Cước phí"
-          value={`${pkgDetail.price.toLocaleString("vi-VN")}đ`}
-        />
-        <SummaryCard
-          icon={<Clock className="w-6 h-6 text-[#d6001c]" />}
-          label="Thời hạn sử dụng"
-          value={
-            pkgDetail.durationMonths === 0
-              ? "1 ngày"
-              : `${pkgDetail.durationMonths} tháng`
-          }
-        />
-        <SummaryCard
-          icon={<Wifi className="w-6 h-6 text-[#d6001c]" />}
-          label="Dung lượng data 4G"
-          value={pkgDetail.durationMonths.toString()}
-          isHtml
-        />
-        <SummaryCard
-          icon={<MessageSquareText className="w-6 h-6 text-[#d6001c]" />}
-          label="Cú pháp đăng ký qua SMS"
-          value={pkgDetail.durationMonths.toString()}
-          isHtml
-          highlight
-        />
-      </div>
-
-      {/* --- SECTION 2: GIỚI THIỆU --- */}
-      <div className="bg-white rounded-3xl shadow border border-gray-200 p-8 mb-8">
-        <div className="prose prose-gray max-w-none mb-10">
-          <h2 className="text-2xl font-bold mb-6">
-            Giới thiệu{" "}
-            <span className="text-red-600">{pkgDetail.packageName}</span>
-          </h2>
-          {/* {pkgDetail.description ? (
-            <div dangerouslySetInnerHTML={{ __html: pkgDetail.description }} />
-          ) : (
-            <p className="text-gray-500 italic">
-              {pkgDetail.description}
-              Hiện chưa có mô tả cho gói cước này.
-            </p>
-          )} */}
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-50 pb-32">
+      {/* Header với gradient đỏ */}
+      <div className="bg-gradient-to-r from-red-600 to-red-500 text-white pt-8 pb-20 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
         </div>
-
-        {/* Chi tiết ưu đãi */}
-        <div className="mb-10">
-          <h3 className="text-2xl font-semibold mb-4">
-            Chi tiết ưu đãi gói {pkgDetail.packageName}
-          </h3>
-          {pkgDetail.description?.length > 0 ? (
-            <div
-              dangerouslySetInnerHTML={{ __html: pkgDetail.description || "" }}
-            />
-          ) : (
-            <p className="text-gray-500 italic">
-              Chưa có thông tin chi tiết ưu đãi.
-            </p>
-          )}
-        </div>
-
-        {/* Nhà cung cấp
-        <div>
-          <h3 className="text-xl font-semibold mb-3">Đơn vị cung cấp</h3>
-          {pkgDetail. ? (
-            <>
-              <p>
-                <strong>{pkgDetail.provider_info.company}</strong>
-              </p>
-              <p>Địa chỉ: {pkgDetail.provider_info.address}</p>
-              <p>Hotline: {pkgDetail.provider_info.hotline}</p>
-              <p>
-                Website:{" "}
-                <a
-                  href={pkgDetail.provider_info.website}
-                  className="text-blue-600 hover:underline"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {pkgDetail.provider_info.website}
-                </a>
-              </p>
-            </>
-          ) : (
-            <p className="text-gray-500 italic">
-              Thông tin nhà cung cấp chưa được cập nhật.
-            </p>
-          )}
-        </div> */}
-      </div>
-
-      {/* --- GÓI CƯỚC TƯƠNG TỰ ---
-      <div className="mt-12">
-        <h3 className="text-2xl font-extrabold text-gray-800 mb-8 tracking-wide uppercase">
-          Gói cước tương tự
-        </h3>
-        {pkgDetail.similar_packages?.length > 0 ? (
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {pkgDetail.similar_packages.map((p: any) => (
-              <PackageCard
-                key={p.id}
-                id={p.id}
-                data={p.data}
-                price={p.price}
-                duration_months={pkgDetail.duration_months}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500 italic">
-            Hiện chưa có gói tương tự nào được đề xuất.
-          </p>
-        )}
-      </div> */}
-
-      {/* --- STICKY FOOTER --- */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-3px_10px_rgba(0,0,0,0.05)] flex justify-between items-center px-10 py-5 z-50">
-        <div className="pl-12">
-          <p className="text-2xl font-extrabold text-gray-900">
-            <span className="text-[#d6001c]">{pkgDetail.packageName}</span>
-          </p>
-          <p className="text-lg font-bold text-gray-800 mt-1">
-            {pkgDetail.price.toLocaleString("vi-VN")}đ{" "}
-            <span className="font-normal text-gray-500">
-              /{" "}
-              {pkgDetail.durationMonths === 0
-                ? "ngày"
-                : `${pkgDetail.durationMonths} tháng`}
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-white/90 hover:text-white mb-6 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-semibold">Quay lại</span>
+          </button>
+          
+          <h1 className="text-5xl font-extrabold mb-4 drop-shadow-lg">
+            {pkgDetail.packageName}
+          </h1>
+          
+          <div className="flex items-baseline gap-3">
+            <span className="text-5xl font-extrabold">{pkgDetail.price.toLocaleString("vi-VN")}đ</span>
+            <span className="text-xl text-white/90">
+              / {pkgDetail.durationMonths === 0 ? "ngày" : `${pkgDetail.durationMonths} tháng`}
             </span>
-          </p>
+          </div>
         </div>
-        <button
-          className="bg-[#d6001c] text-white font-bold rounded-full px-10 py-3 
-                     shadow-[0_6px_12px_rgba(214,0,28,0.4)] 
-                     hover:shadow-[0_8px_16px_rgba(214,0,28,0.5)] 
-                     hover:bg-[#b80019] active:scale-95 
-                     transition-all duration-300 mr-12"
-          onClick={() => navigate(`/payment?id=${pkgDetail.id}`)}
-        >
-          ĐĂNG KÝ
-        </button>
+      </div>
+
+      {/* Thẻ summary cards nổi lên */}
+      <div className="max-w-6xl mx-auto px-6 -mt-12 relative z-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          <SummaryCard
+            icon={<Wallet className="w-7 h-7" />}
+            label="Cước phí"
+            value={`${pkgDetail.price.toLocaleString("vi-VN")}đ`}
+          />
+          <SummaryCard
+            icon={<Clock className="w-7 h-7" />}
+            label="Thời hạn"
+            value={pkgDetail.durationMonths === 0 ? "1 ngày" : `${pkgDetail.durationMonths} tháng`}
+          />
+          <SummaryCard
+            icon={<Wifi className="w-7 h-7" />}
+            label="Dung lượng 4G"
+            value="Không giới hạn"
+          />
+          <SummaryCard
+            icon={<MessageSquareText className="w-7 h-7" />}
+            label="Cú pháp SMS"
+            value="DK GOI"
+            highlight
+          />
+        </div>
+
+        {/* Nội dung chính */}
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-10 mb-8">
+          {/* Giới thiệu */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1.5 h-8 bg-gradient-to-b from-red-600 to-red-500 rounded-full"></div>
+              <h2 className="text-3xl font-bold text-gray-800">
+                Giới thiệu gói cước
+              </h2>
+            </div>
+            
+            <div className="prose prose-lg max-w-none text-gray-700">
+              <p className="leading-relaxed">
+                {pkgDetail.description || "Gói cước ưu đãi với nhiều tiện ích hấp dẫn dành cho khách hàng."}
+              </p>
+            </div>
+          </div>
+
+          {/* Chi tiết ưu đãi */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1.5 h-8 bg-gradient-to-b from-red-600 to-red-500 rounded-full"></div>
+              <h3 className="text-3xl font-bold text-gray-800">
+                Chi tiết ưu đãi
+              </h3>
+            </div>
+            
+            {pkgDetail.description?.length > 0 ? (
+              <div 
+                className="prose prose-lg max-w-none text-gray-700"
+                dangerouslySetInnerHTML={{ __html: pkgDetail.description }}
+              />
+            ) : (
+              <div className="bg-red-50 border border-red-100 rounded-2xl p-6">
+                <p className="text-gray-600 text-center italic">
+                  Thông tin chi tiết sẽ được cập nhật sớm.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Điều kiện áp dụng */}
+          <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100">
+            <h4 className="text-xl font-bold text-gray-800 mb-4">📋 Lưu ý quan trọng</h4>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold mt-1">•</span>
+                <span>Gói cước tự động gia hạn hàng tháng</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold mt-1">•</span>
+                <span>Không giới hạn tốc độ trong gói cước</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-600 font-bold mt-1">•</span>
+                <span>Hỗ trợ khách hàng 24/7</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky Footer */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-50">
+        <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+          <div>
+            <p className="text-sm text-gray-600 mb-1">Bạn đang chọn</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {pkgDetail.packageName}
+            </p>
+            <p className="text-lg font-semibold text-red-600 mt-1">
+              {pkgDetail.price.toLocaleString("vi-VN")}đ
+              <span className="text-gray-500 font-normal text-base ml-1">
+                / {pkgDetail.durationMonths === 0 ? "ngày" : `${pkgDetail.durationMonths} tháng`}
+              </span>
+            </p>
+          </div>
+          
+          <button
+            className="bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-full px-12 py-4 text-lg
+                       shadow-[0_8px_20px_rgba(220,38,38,0.4)] 
+                       hover:shadow-[0_12px_28px_rgba(220,38,38,0.5)] 
+                       hover:scale-105 active:scale-95 
+                       transition-all duration-300"
+            onClick={() => navigate(`/payment?id=${pkgDetail.id}`)}
+          >
+            ĐĂNG KÝ NGAY
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -218,12 +223,11 @@ const PackageDetail: React.FC = () => {
 
 export default PackageDetail;
 
-// ===== Component con gọn gàng cho phần summary =====
+// Component SummaryCard với design mới
 interface SummaryCardProps {
   icon: React.ReactNode;
   label: string;
   value: string;
-  isHtml?: boolean;
   highlight?: boolean;
 }
 
@@ -231,29 +235,19 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
   icon,
   label,
   value,
-  isHtml,
   highlight,
 }) => (
-  <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl shadow-sm p-4">
-    <div className="p-2 bg-[#fff1f2] rounded-full">{icon}</div>
-    <div className="min-w-0">
-      <p className="text-gray-500 text-sm">{label}</p>
-      {isHtml ? (
-        <div
-          className={`text-lg font-bold truncate whitespace-nowrap ${
-            highlight ? "text-[#d6001c]" : "text-gray-900"
-          }`}
-          dangerouslySetInnerHTML={{ __html: value }}
-        />
-      ) : (
-        <p
-          className={`text-lg font-bold truncate whitespace-nowrap ${
-            highlight ? "text-[#d6001c]" : "text-gray-900"
-          }`}
-        >
-          {value}
-        </p>
-      )}
+  <div className={`bg-white rounded-2xl shadow-lg border-2 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+    highlight ? 'border-red-500 bg-gradient-to-br from-red-50 to-white' : 'border-gray-100'
+  }`}>
+    <div className={`inline-flex p-3 rounded-xl mb-4 ${
+      highlight ? 'bg-red-500 text-white' : 'bg-red-100 text-red-600'
+    }`}>
+      {icon}
     </div>
+    <p className="text-gray-600 text-sm mb-2 font-medium">{label}</p>
+    <p className={`text-xl font-bold ${highlight ? 'text-red-600' : 'text-gray-900'}`}>
+      {value}
+    </p>
   </div>
 );

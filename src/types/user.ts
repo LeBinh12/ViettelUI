@@ -1,4 +1,5 @@
 export interface User {
+    username: ReactNode;
     id: number;            // số cho dễ mock
     name: string;          // tên người dùng
     email: string;
