@@ -76,6 +76,7 @@ export default function HomeLayout(): JSX.Element {
               { name: "Trang chủ", path: "/" },
               { name: "Tin tức", path: "/news" },
               { name: "Khuyến mãi", path: "/promotions" },
+              { name: "Tra cứu gói cước", path: "/PackageLookup" },
             ].map((item) => (
               <li key={item.name}>
                 <NavLink
