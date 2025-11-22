@@ -16,6 +16,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import UsersScreen from "./page/UsersScreen";
 import ProductScreen from "./page/PackageScreen";
 import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
+import PackageLookup from "./page/PackageLookup";
 
 function App() {
   useLoadUser();
@@ -44,7 +45,7 @@ function App() {
           <Route path="/home" element={<HomeLayout />} /> */}
           <Route index element={<HomeScreen />} />
           <Route path="/home" element={<HomeScreen />} />
-
+          <Route path="/PackageLookup" element={<PackageLookup />} />
           <Route path="/package/:id" element={<PackageDetail />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/InvoiceManagement" element={<InvoiceManagement />} />
