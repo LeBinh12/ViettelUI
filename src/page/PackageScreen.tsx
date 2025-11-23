@@ -48,6 +48,7 @@ const PackageScreen: React.FC = () => {
 
   // Thêm gói dịch vụ
   const handleAddPackage = async (req: ServicePackageAddRequest) => {
+    console.log("Adding package:", req);
     try {
       const res = await servicePackageApi.add(req);
       if (res.succeeded) {

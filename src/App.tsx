@@ -17,6 +17,7 @@ import ProductScreen from "./page/PackageScreen";
 import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
 import PackageLookup from "./page/PackageLookup";
 import InvoiceManagement from "./page/InvoiceManagement";
+import InvoiceScreen from "./page/InvoiceScreen";
 
 function App() {
   useLoadUser();
@@ -56,6 +57,8 @@ function App() {
           <Route path="/admin/dashboard" element={<DashboardScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route path="/admin/products" element={<ProductScreen />} />
+          <Route path="/admin/invoices" element={<InvoiceScreen />} />
+
         </Route>
       </Routes>
 

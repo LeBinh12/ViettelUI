@@ -23,6 +23,7 @@ export const servicePackageApi = {
   },
 
   add: async (req: ServicePackageAddRequest): Promise<ServicePackageAddResponse> => {
+    console.log(`${API_URL}/ServicePackage/add`, req)
     const response = await axiosClient.post<ServicePackageAddResponse>(`${API_URL}/ServicePackage/add`, req);
     return response.data
   },

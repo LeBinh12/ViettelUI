@@ -4,10 +4,10 @@ import {
   LayoutDashboard,
   Package,
   Users,
-  ShoppingBag,
   LogOut,
   Menu,
   ChevronLeft,
+  Receipt,
 } from "lucide-react";
 
 const AdminLayout: React.FC = () => {
@@ -18,7 +18,7 @@ const AdminLayout: React.FC = () => {
     { name: "Dashboard", path: "/admin/dashboard", icon: <LayoutDashboard size={20} /> },
     { name: "Sản phẩm", path: "/admin/products", icon: <Package size={20} /> },
     { name: "Người dùng", path: "/admin/users", icon: <Users size={20} /> },
-    { name: "Đơn hàng", path: "/admin/orders", icon: <ShoppingBag size={20} /> },
+    { name: "Hóa đơn", path: "/admin/invoices", icon: <Receipt size={20} /> },
   ];
 
   return (
