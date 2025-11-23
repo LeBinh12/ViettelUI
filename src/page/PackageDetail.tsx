@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Wallet, Clock, Wifi, MessageSquareText, ArrowLeft } from "lucide-react";
+import {
+  Wallet,
+  Clock,
+  Wifi,
+  MessageSquareText,
+  ArrowLeft,
+} from "lucide-react";
 import { servicePackageApi } from "../api";
 import type { ServicePackageDTO } from "../types/servicePackage";
 
@@ -78,7 +84,7 @@ const PackageDetail: React.FC = () => {
           <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
         </div>
-        
+
         <div className="max-w-6xl mx-auto relative z-10">
           <button
             onClick={() => navigate(-1)}
@@ -87,15 +93,20 @@ const PackageDetail: React.FC = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-semibold">Quay lại</span>
           </button>
-          
+
           <h1 className="text-5xl font-extrabold mb-4 drop-shadow-lg">
             {pkgDetail.packageName}
           </h1>
-          
+
           <div className="flex items-baseline gap-3">
-            <span className="text-5xl font-extrabold">{pkgDetail.price.toLocaleString("vi-VN")}đ</span>
+            <span className="text-5xl font-extrabold">
+              {pkgDetail.price.toLocaleString("vi-VN")}đ
+            </span>
             <span className="text-xl text-white/90">
-              / {pkgDetail.durationMonths === 0 ? "ngày" : `${pkgDetail.durationMonths} tháng`}
+              /{" "}
+              {pkgDetail.durationMonths === 0
+                ? "ngày"
+                : `${pkgDetail.durationMonths} tháng`}
             </span>
           </div>
         </div>
@@ -112,7 +123,11 @@ const PackageDetail: React.FC = () => {
           <SummaryCard
             icon={<Clock className="w-7 h-7" />}
             label="Thời hạn"
-            value={pkgDetail.durationMonths === 0 ? "1 ngày" : `${pkgDetail.durationMonths} tháng`}
+            value={
+              pkgDetail.durationMonths === 0
+                ? "1 ngày"
+                : `${pkgDetail.durationMonths} tháng`
+            }
           />
           <SummaryCard
             icon={<Wifi className="w-7 h-7" />}
@@ -137,10 +152,11 @@ const PackageDetail: React.FC = () => {
                 Giới thiệu gói cước
               </h2>
             </div>
-            
+
             <div className="prose prose-lg max-w-none text-gray-700">
               <p className="leading-relaxed">
-                {pkgDetail.description || "Gói cước ưu đãi với nhiều tiện ích hấp dẫn dành cho khách hàng."}
+                {pkgDetail.description ||
+                  "Gói cước ưu đãi với nhiều tiện ích hấp dẫn dành cho khách hàng."}
               </p>
             </div>
           </div>
@@ -153,9 +169,9 @@ const PackageDetail: React.FC = () => {
                 Chi tiết ưu đãi
               </h3>
             </div>
-            
+
             {pkgDetail.description?.length > 0 ? (
-              <div 
+              <div
                 className="prose prose-lg max-w-none text-gray-700"
                 dangerouslySetInnerHTML={{ __html: pkgDetail.description }}
               />
@@ -170,7 +186,9 @@ const PackageDetail: React.FC = () => {
 
           {/* Điều kiện áp dụng */}
           <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border border-red-100">
-            <h4 className="text-xl font-bold text-gray-800 mb-4">📋 Lưu ý quan trọng</h4>
+            <h4 className="text-xl font-bold text-gray-800 mb-4">
+              📋 Lưu ý quan trọng
+            </h4>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start gap-2">
                 <span className="text-red-600 font-bold mt-1">•</span>
@@ -200,11 +218,14 @@ const PackageDetail: React.FC = () => {
             <p className="text-lg font-semibold text-red-600 mt-1">
               {pkgDetail.price.toLocaleString("vi-VN")}đ
               <span className="text-gray-500 font-normal text-base ml-1">
-                / {pkgDetail.durationMonths === 0 ? "ngày" : `${pkgDetail.durationMonths} tháng`}
+                /{" "}
+                {pkgDetail.durationMonths === 0
+                  ? "ngày"
+                  : `${pkgDetail.durationMonths} tháng`}
               </span>
             </p>
           </div>
-          
+
           <button
             className="bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-full px-12 py-4 text-lg
                        shadow-[0_8px_20px_rgba(220,38,38,0.4)] 
@@ -237,16 +258,26 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
   value,
   highlight,
 }) => (
-  <div className={`bg-white rounded-2xl shadow-lg border-2 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-    highlight ? 'border-red-500 bg-gradient-to-br from-red-50 to-white' : 'border-gray-100'
-  }`}>
-    <div className={`inline-flex p-3 rounded-xl mb-4 ${
-      highlight ? 'bg-red-500 text-white' : 'bg-red-100 text-red-600'
-    }`}>
+  <div
+    className={`bg-white rounded-2xl shadow-lg border-2 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+      highlight
+        ? "border-red-500 bg-gradient-to-br from-red-50 to-white"
+        : "border-gray-100"
+    }`}
+  >
+    <div
+      className={`inline-flex p-3 rounded-xl mb-4 ${
+        highlight ? "bg-red-500 text-white" : "bg-red-100 text-red-600"
+      }`}
+    >
       {icon}
     </div>
     <p className="text-gray-600 text-sm mb-2 font-medium">{label}</p>
-    <p className={`text-xl font-bold ${highlight ? 'text-red-600' : 'text-gray-900'}`}>
+    <p
+      className={`text-xl font-bold ${
+        highlight ? "text-red-600" : "text-gray-900"
+      }`}
+    >
       {value}
     </p>
   </div>

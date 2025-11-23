@@ -7,6 +7,7 @@ export const servicePackageApi = {
 
   // Lấy tất cả
   getAll: async (): Promise<ServicePackageResponse> => {
+    console.log(`${API_URL}/ServicePackage/get-all`)
     const response = await axiosClient.get<ServicePackageResponse>(`${API_URL}/ServicePackage/get-all`);
     return response.data
   },

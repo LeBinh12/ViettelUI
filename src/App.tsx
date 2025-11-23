@@ -8,7 +8,6 @@ import PackageDetail from "./page/PackageDetail";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import PaymentPage from "./page/PaymentPage";
-import { InvoiceManagement } from "./page/InvoiceManagement";
 // import { PrivateRoute, PublicRoute } from "./routes/Guard";
 import { useLoadUser } from "./hooks/useLoadUser";
 import DashboardScreen from "./page/DashboardScreen";
@@ -17,6 +16,7 @@ import UsersScreen from "./page/UsersScreen";
 import ProductScreen from "./page/PackageScreen";
 import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
 import PackageLookup from "./page/PackageLookup";
+import InvoiceManagement from "./page/InvoiceManagement";
 
 function App() {
   useLoadUser();

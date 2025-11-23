@@ -18,6 +18,8 @@ export const categoryApi = {
   },
 
   getAllCategory: async (): Promise<GetAllCategoryResponse> => {
+    console.log(`${API_URL}/Category/get-all`)
+
     const response = await axiosClient.get<GetAllCategoryResponse>(`${API_URL}/Category/get-all`);
     return response.data
   },

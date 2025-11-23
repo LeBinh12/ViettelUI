@@ -133,16 +133,15 @@ const HomeScreen: React.FC = () => {
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-red-500/10 to-transparent rounded-full blur-3xl animate-float"></div>
         <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-tl from-red-600/10 to-transparent rounded-full blur-3xl animate-float-delayed"></div>
         <div className="absolute bottom-0 left-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-red-400/10 to-transparent rounded-full blur-3xl animate-float-slow"></div>
-        
+
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-30"></div>
       </div>
 
       {/* ULTRA MODERN BANNER */}
       <div className="relative w-full h-[350px] md:h-[450px] lg:h-[550px] mb-20 overflow-hidden">
-
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white z-10"></div>
-        
+
         <Slider ref={sliderRef} {...bannerSettings}>
           {bannerImages.map((img, idx) => (
             <div key={idx} className="relative">
@@ -151,7 +150,9 @@ const HomeScreen: React.FC = () => {
                   src={img}
                   alt={`Banner ${idx + 1}`}
                   className={`w-full h-full object-cover transition-all duration-[8000ms] ease-out ${
-                    currentSlide === idx ? "scale-110 brightness-90" : "scale-100 brightness-75"
+                    currentSlide === idx
+                      ? "scale-110 brightness-90"
+                      : "scale-100 brightness-75"
                   }`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-red-900/40 via-red-600/20 to-transparent"></div>
@@ -163,7 +164,13 @@ const HomeScreen: React.FC = () => {
 
         {/* Banner Content Overlay */}
         <div className="absolute inset-0 z-20 flex items-center justify-center">
-          <div className={`text-center transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <div
+            className={`text-center transform transition-all duration-1000 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
             <div className="relative inline-block mb-6">
               <div className="absolute -inset-4 bg-gradient-to-r from-red-600 to-red-400 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
               <h1 className="relative text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight">
@@ -220,7 +227,9 @@ const HomeScreen: React.FC = () => {
                 Danh Mục Dịch Vụ
               </span>
             </h2>
-            <p className="text-gray-600 text-lg">Chọn danh mục phù hợp với nhu cầu của bạn</p>
+            <p className="text-gray-600 text-lg">
+              Chọn danh mục phù hợp với nhu cầu của bạn
+            </p>
           </div>
 
           {/* Category Pills */}
@@ -253,7 +262,7 @@ const HomeScreen: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-2xl animate-shimmer-slow"></div>
                     </>
                   )}
-                  
+
                   <span className="relative z-10 flex items-center gap-2">
                     {category.name}
                     {activeTab === category.id && (
@@ -278,7 +287,7 @@ const HomeScreen: React.FC = () => {
           <div className="relative bg-gradient-to-br from-red-50 via-white to-red-50 border-2 border-red-200 rounded-3xl p-10 text-center mb-16 overflow-hidden shadow-2xl animate-fadeIn">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(239,68,68,0.1),transparent)]"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(239,68,68,0.1),transparent)]"></div>
-            
+
             <div className="relative">
               <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-500 to-red-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-red-500/30 animate-bounce-slow transform rotate-12">
                 <svg
@@ -295,15 +304,27 @@ const HomeScreen: React.FC = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-red-600 mb-3">Oops! Có lỗi xảy ra</h3>
+              <h3 className="text-2xl font-bold text-red-600 mb-3">
+                Oops! Có lỗi xảy ra
+              </h3>
               <p className="text-gray-700 text-lg mb-6">{error}</p>
               <button
                 onClick={() => window.location.reload()}
                 className="group relative px-10 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
                   </svg>
                   Thử lại
                 </span>
@@ -341,7 +362,8 @@ const HomeScreen: React.FC = () => {
                 Chưa có gói cước nào
               </h3>
               <p className="text-gray-500 text-lg max-w-md mx-auto">
-                Danh mục này hiện chưa có gói cước. Hãy thử chọn danh mục khác nhé!
+                Danh mục này hiện chưa có gói cước. Hãy thử chọn danh mục khác
+                nhé!
               </p>
             </div>
           ) : (
@@ -372,77 +394,100 @@ const HomeScreen: React.FC = () => {
             </div>
           )}
         </div>
-        
-{/* SERVICE INTRODUCTION SECTION */}
-<div className="mt-32 relative">
-  <div className="text-center mb-12">
-    <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
-      <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-red-600 to-gray-900">
-        Giới Thiệu Dịch Vụ Viettel
-      </span>
-    </h2>
-    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-      Viettel cung cấp đa dạng dịch vụ viễn thông nhằm mang đến trải nghiệm tốt nhất
-      cho mọi khách hàng. Từ các gói data tốc độ cao, dịch vụ thoại – SMS tiết kiệm,
-      cho đến các giải pháp Internet – truyền hình hiện đại.
-    </p>
-  </div>
 
-  {/* 4 Feature Cards */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-12">
+        {/* SERVICE INTRODUCTION SECTION */}
+        <div className="mt-32 relative">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-red-600 to-gray-900">
+                Giới Thiệu Dịch Vụ Viettel
+              </span>
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Viettel cung cấp đa dạng dịch vụ viễn thông nhằm mang đến trải
+              nghiệm tốt nhất cho mọi khách hàng. Từ các gói data tốc độ cao,
+              dịch vụ thoại – SMS tiết kiệm, cho đến các giải pháp Internet –
+              truyền hình hiện đại.
+            </p>
+          </div>
 
-    {/* Gói Data */}
-    <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
-      <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
-      <div className="relative">
-        <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
-          <Wifi className="w-10 h-10 text-red-500" strokeWidth={1.4} />
+          {/* 4 Feature Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-12">
+            {/* Gói Data */}
+            <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
+              <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
+              <div className="relative">
+                <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
+                  <Wifi className="w-10 h-10 text-red-500" strokeWidth={1.4} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">
+                  Gói Data Tốc Độ Cao
+                </h3>
+                <p className="text-gray-600">
+                  Lướt web, xem phim, livestream mượt mà với tốc độ 4G/5G ổn
+                  định.
+                </p>
+              </div>
+            </div>
+
+            {/* Thoại + SMS */}
+            <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
+              <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
+              <div className="relative">
+                <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
+                  <PhoneCall
+                    className="w-10 h-10 text-red-500"
+                    strokeWidth={1.4}
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">
+                  Gọi & SMS Tiết Kiệm
+                </h3>
+                <p className="text-gray-600">
+                  Các gói thoại – SMS giá rẻ, phù hợp cho nhu cầu liên lạc hàng
+                  ngày.
+                </p>
+              </div>
+            </div>
+
+            {/* Internet – Truyền hình */}
+            <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
+              <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
+              <div className="relative">
+                <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
+                  <Tv className="w-10 h-10 text-red-500" strokeWidth={1.4} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">
+                  Internet – Truyền Hình
+                </h3>
+                <p className="text-gray-600">
+                  Tốc độ cao, đường truyền ổn định, phù hợp cho gia đình & doanh
+                  nghiệp.
+                </p>
+              </div>
+            </div>
+
+            {/* Giá trị gia tăng */}
+            <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
+              <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
+              <div className="relative">
+                <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
+                  <Sparkles
+                    className="w-10 h-10 text-red-500"
+                    strokeWidth={1.4}
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">
+                  Dịch Vụ Giá Trị Gia Tăng
+                </h3>
+                <p className="text-gray-600">
+                  Nhạc chờ, Cloud, lưu trữ, bảo mật... đáp ứng đa dạng nhu cầu
+                  hiện đại.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-3">Gói Data Tốc Độ Cao</h3>
-        <p className="text-gray-600">Lướt web, xem phim, livestream mượt mà với tốc độ 4G/5G ổn định.</p>
-      </div>
-    </div>
-
-    {/* Thoại + SMS */}
-    <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
-      <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
-      <div className="relative">
-        <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
-          <PhoneCall className="w-10 h-10 text-red-500" strokeWidth={1.4} />
-        </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-3">Gọi & SMS Tiết Kiệm</h3>
-        <p className="text-gray-600">Các gói thoại – SMS giá rẻ, phù hợp cho nhu cầu liên lạc hàng ngày.</p>
-      </div>
-    </div>
-
-    {/* Internet – Truyền hình */}
-    <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
-      <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
-      <div className="relative">
-        <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
-          <Tv className="w-10 h-10 text-red-500" strokeWidth={1.4} />
-        </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-3">Internet – Truyền Hình</h3>
-        <p className="text-gray-600">Tốc độ cao, đường truyền ổn định, phù hợp cho gia đình & doanh nghiệp.</p>
-      </div>
-    </div>
-
-    {/* Giá trị gia tăng */}
-    <div className="group relative p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
-      <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-400 rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
-      <div className="relative">
-        <div className="w-16 h-16 mx-auto mb-6 bg-red-500/10 rounded-2xl flex items-center justify-center">
-          <Sparkles className="w-10 h-10 text-red-500" strokeWidth={1.4} />
-        </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-3">Dịch Vụ Giá Trị Gia Tăng</h3>
-        <p className="text-gray-600">Nhạc chờ, Cloud, lưu trữ, bảo mật... đáp ứng đa dạng nhu cầu hiện đại.</p>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
       </div>
 
       <style>{`
