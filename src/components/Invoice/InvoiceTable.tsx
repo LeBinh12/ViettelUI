@@ -1,16 +1,20 @@
-import { Pencil, Trash2 } from "lucide-react";
 import type { Invoice } from "../../types/invoice";
+import React from "react";
+import { Eye } from "lucide-react";
+
 
 interface InvoiceTableProps {
   invoices: Invoice[];
-  onEdit: (inv: Invoice) => void;
-  onDelete: (id: string) => void;
+  onView: (id: string) => void;
+  isCallback: boolean;
+  setIsCallback: (v: boolean) => void;
 }
 
 const InvoiceTable: React.FC<InvoiceTableProps> = ({
   invoices,
-  onEdit,
-  onDelete,
+  onView,
+  isCallback,
+  setIsCallback,
 }) => {
   return (
     <div className="overflow-x-auto">
@@ -43,32 +47,35 @@ const InvoiceTable: React.FC<InvoiceTableProps> = ({
               <td className="py-3 px-4">{inv.date}</td>
 
               <td
-                className={`py-3 px-4 font-semibold ${
-                  inv.status === "Paid"
-                    ? "text-green-600"
-                    : inv.status === "Pending"
+                className={`py-3 px-4 font-semibold ${inv.status === "Paid"
+                  ? "text-green-600"
+                  : inv.status === "Pending"
                     ? "text-yellow-600"
                     : "text-red-600"
-                }`}
+                  }`}
               >
                 {inv.status}
               </td>
 
               <td className="py-3 px-4 flex justify-center items-center gap-3">
-                {/* Edit */}
                 <button
-                  onClick={() => onEdit(inv)}
+                  onClick={() => onView(inv.id)}
                   className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition shadow-sm"
                 >
-                  <Pencil size={18} />
+                  <Eye size={18} />
                 </button>
 
-                {/* Delete */}
                 <button
-                  onClick={() => onDelete(inv.id)}
-                  className="p-2 rounded-lg bg-rose-100 text-rose-600 hover:bg-rose-200 transition shadow-sm"
+                  disabled={isCallback}
+                  onClick={() => setIsCallback(true)}
+                  className={`p-2 rounded-lg transition shadow-sm
+                    ${isCallback
+                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                      : "bg-rose-100 text-rose-600 hover:bg-rose-200"
+                    }
+                  `}
                 >
-                  <Trash2 size={18} />
+                  CallBack
                 </button>
               </td>
             </tr>

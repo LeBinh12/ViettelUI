@@ -1,0 +1,26 @@
+export const mockInvoiceDetail = [
+    {
+        id: "inv-001",
+        amount: 1200000,
+        fullName: "Nguyễn Thanh Hào",
+        phone: "0987123456",
+        packageName: "Gói VIP 12 tháng",
+        durationMonths: 12,
+        dueDate: "2025-01-01T10:00:00Z",
+        status: "Paid",
+        lastModified: "2025-01-02T09:10:00Z",
+        note: "Khách thanh toán chuyển khoản.",
+    },
+    {
+        id: "inv-002",
+        amount: 850000,
+        fullName: "Trần Minh Tâm",
+        phone: "0915123123",
+        packageName: "Gói Cơ Bản 6 tháng",
+        durationMonths: 6,
+        dueDate: "2025-01-09T08:30:00Z",
+        status: "Pending",
+        lastModified: "2025-01-09T08:32:12Z",
+        note: "Khách hẹn 3 ngày sau thanh toán.",
+    },
+];

@@ -1,22 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import InvoiceTable from "../components/Invoice/InvoiceTable";
+import ShowInvoiceForm from "../components/Invoice/ShowInvoiceForm";
 import type { Invoice } from "../types/invoice";
+import { mockInvoiceDetail } from "../data/mock/invoice.mock";
+import type { InvoiceDetail } from "../components/Invoice/ShowInvoiceForm";
 
 const InvoiceScreen = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceDetail | null>(null);
+    const [isCallback, setIsCallback] = useState(false);
 
   useEffect(() => {
-    // TODO: gọi API thật
     setInvoices([
       {
-        id: "1",
+        id: "inv-001",
         customerName: "Nguyễn Thanh Hào",
         amount: 1200000,
         date: "2025-01-01",
         status: "Paid",
       },
       {
-        id: "2",
+        id: "inv-002",
         customerName: "Trần Minh Tâm",
         amount: 850000,
         date: "2025-01-09",
@@ -25,13 +29,11 @@ const InvoiceScreen = () => {
     ]);
   }, []);
 
-  const handleEdit = (invoice: Invoice) => {
-    console.log("EDIT:", invoice);
+  const handleView = (id: string) => {
+    const found = mockInvoiceDetail.find((e) => e.id === id);
+    if (found) setSelectedInvoice(found);
   };
 
-  const handleDelete = (id: string) => {
-    console.log("DELETE:", id);
-  };
 
   return (
     <div className="p-6">
@@ -39,8 +41,14 @@ const InvoiceScreen = () => {
 
       <InvoiceTable
         invoices={invoices}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onView={handleView}
+        isCallback={isCallback}
+        setIsCallback={setIsCallback}
+      />
+
+      <ShowInvoiceForm
+        invoice={selectedInvoice}
+        onClose={() => setSelectedInvoice(null)}
       />
     </div>
   );
