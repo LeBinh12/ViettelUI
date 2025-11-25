@@ -11,6 +11,7 @@ import {
   Timer,
   Clipboard,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function TraCuuGoiCuoc() {
   const customer = useRecoilValue(customerAtom);
@@ -20,7 +21,7 @@ export default function TraCuuGoiCuoc() {
   const [reportInvoiceId, setReportInvoiceId] = useState<string | null>(null);
   const [reportMessage, setReportMessage] = useState<string>("");
   const [isReporting, setIsReporting] = useState(false);
-
+  const navigate = useNavigate();
   const [fromDate, setFromDate] = useState("2025-09-01");
   const [toDate, setToDate] = useState("2025-11-13");
   const [type, setType] = useState<"invoice" | "customer">("invoice");
@@ -90,26 +91,7 @@ export default function TraCuuGoiCuoc() {
         return;
       }
 
-      try {
-        const result = await invoiceApi.getById(invoiceCode);
-        setInvoiceResult(result);
-        toast.success("Tra cứu thành công!");
-        setTimeout(
-          () => resultRef.current?.scrollIntoView({ behavior: "smooth" }),
-          100
-        );
-      } catch (error: any) {
-        setInvoiceResult(null);
-        if (error.response?.data?.message) {
-          setReportMessage(error.response.data.message);
-          setReportInvoiceId(invoiceCode);
-          setShowReportModal(true);
-        } else {
-          toast.error("Đã có lỗi xảy ra khi tra cứu hóa đơn");
-        }
-      } finally {
-        setIsLoading(false);
-      }
+      navigate(`/invoice/${invoiceCode}`);
     } else {
       try {
         const customerData = { email, phone };
@@ -214,6 +196,7 @@ export default function TraCuuGoiCuoc() {
 
                 return (
                   <div
+                    onClick={() => navigate(`/invoice/${inv.id}`)}
                     key={inv.id}
                     className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 p-8 border-2 border-red-100 hover:scale-105 hover:border-red-300"
                     style={{ animationDelay: `${idx * 0.1}s` }}

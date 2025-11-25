@@ -62,6 +62,8 @@ export interface InvoiceDTO {
     updatedAt: string;
     isDeleted: boolean;
     id: string;
+    isTampered: boolean;
+    isReported: boolean;
 }
 
 

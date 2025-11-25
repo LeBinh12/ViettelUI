@@ -55,7 +55,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
       <div className="flex w-full gap-3 mt-auto">
         <button
           className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 text-lg font-medium transition"
-          onClick={() => navigate(`/payment`)}
+          onClick={() => navigate(`/payment?id=${id}`)}
         >
           Đăng ký
         </button>

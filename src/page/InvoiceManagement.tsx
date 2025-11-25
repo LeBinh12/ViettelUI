@@ -7,7 +7,7 @@ import {
   Timer,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { invoiceApi } from "../api/invoiceApi";
 import type { InvoiceData } from "../types/payment";
 import { useRecoilValue } from "recoil";
@@ -20,7 +20,7 @@ export default function InvoiceManagement() {
   const [error, setError] = useState<string | null>(null);
   const location = useLocation();
   const [token, setToken] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       const params = new URLSearchParams(location.search);
@@ -168,6 +168,7 @@ export default function InvoiceManagement() {
 
                 return (
                   <div
+                    onClick={() => navigate(`/invoice/${inv.id}`)}
                     key={inv.id}
                     className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-6 border-2 border-red-100 animate-slide-up hover:scale-[1.02] hover:-translate-y-1 hover:border-red-300"
                     style={{ animationDelay: `${index * 0.15}s` }}
