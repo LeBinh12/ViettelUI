@@ -18,6 +18,7 @@ import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
 import PackageLookup from "./page/PackageLookup";
 import InvoiceManagement from "./page/InvoiceManagement";
 import InvoiceScreen from "./page/InvoiceScreen";
+import SearchPage from "./page/SearchPage";
 
 function App() {
   useLoadUser();
@@ -51,6 +52,7 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/InvoiceManagement" element={<InvoiceManagement />} />
           <Route path="/confirm-payment" element={<ConfirmPaymentPage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Route>
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<DashboardScreen />} />

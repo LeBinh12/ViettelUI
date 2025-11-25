@@ -54,6 +54,11 @@ export default function HomeLayout(): JSX.Element {
     }, 800);
   };
 
+  const handleSearch = () => {
+    if (!search.trim()) return;
+    navigate(`/search?keyword=${encodeURIComponent(search)}`);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* HEADER */}
@@ -82,10 +87,9 @@ export default function HomeLayout(): JSX.Element {
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    `transition-colors ${
-                      isActive
-                        ? "text-[#e60023] font-semibold"
-                        : "text-gray-800 hover:text-[#e60023]"
+                    `transition-colors ${isActive
+                      ? "text-[#e60023] font-semibold"
+                      : "text-gray-800 hover:text-[#e60023]"
                     }`
                   }
                 >
@@ -103,10 +107,17 @@ export default function HomeLayout(): JSX.Element {
                 placeholder="Tìm kiếm..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-gray-700 w-48 sm:w-64"
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                className="pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 focus:outline-none w-48 sm:w-64"
               />
-              <BsSearch className="absolute right-3 top-2.5 text-gray-400" size={18} />
+              <button
+                onClick={handleSearch}
+                className="absolute right-2 top-2 text-gray-500 hover:text-black"
+              >
+                <BsSearch size={20} />
+              </button>
             </div>
+
             {user && <div className="text-gray-700 font-medium">{user.username}</div>}
             <button
               onClick={handleLogout}
@@ -129,18 +140,18 @@ export default function HomeLayout(): JSX.Element {
           {/* CỘT 1 */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <div className="flex items-center space-x-3 cursor-pointer" >
-          {/* Logo */}
-          <img
-            src="/assets/logo.jpg"
-            alt="VietDev Logo"
-            className="w-14 h-14 rounded-full shadow-md object-cover"
-          />
+              {/* Logo */}
+              <img
+                src="/assets/logo.jpg"
+                alt="VietDev Logo"
+                className="w-14 h-14 rounded-full shadow-md object-cover"
+              />
 
-          {/* Tên công ty bên phải logo */}
-          <span className="text-2xl font-bold text-gray-800">
-            Công Ty <span className="text-blue-600">VietDev</span>
-          </span>
-        </div>
+              {/* Tên công ty bên phải logo */}
+              <span className="text-2xl font-bold text-gray-800">
+                Công Ty <span className="text-blue-600">VietDev</span>
+              </span>
+            </div>
 
             <p className="text-gray-600 text-sm max-w-xs text-center md:text-left">
               Nền tảng cung cấp các gói dịch vụ Internet, combo ưu đãi, và giải pháp kết nối tốc độ cao — giúp bạn luôn online mọi lúc, mọi nơi.
@@ -232,70 +243,68 @@ export default function HomeLayout(): JSX.Element {
       </footer>
 
       {/* MODAL CHAT */}
-    {openChat && (
-  <div className="fixed bottom-24 right-6 z-[60]">
-    <div className="bg-white w-96 h-[520px] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-[fadeIn_0.3s_ease]">
-      {/* Header */}
-      <div className="bg-blue-600 text-white p-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <img
-            src="https://i.pinimg.com/1200x/4b/d7/07/4bd7072385869677f9fd13154e536104.jpg"
-            className="w-8 h-8 rounded-full"
-            alt="VietDev Bot"
-          />
-          <span className="font-semibold">VietDev Chatbot</span>
-        </div>
-        <button
-          onClick={() => setOpenChat(false)}
-          className="text-white hover:text-gray-200 text-lg font-bold"
-        >
-          ✕
-        </button>
-      </div>
+      {openChat && (
+        <div className="fixed bottom-24 right-6 z-[60]">
+          <div className="bg-white w-96 h-[520px] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-[fadeIn_0.3s_ease]">
+            {/* Header */}
+            <div className="bg-blue-600 text-white p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <img
+                  src="https://i.pinimg.com/1200x/4b/d7/07/4bd7072385869677f9fd13154e536104.jpg"
+                  className="w-8 h-8 rounded-full"
+                  alt="VietDev Bot"
+                />
+                <span className="font-semibold">VietDev Chatbot</span>
+              </div>
+              <button
+                onClick={() => setOpenChat(false)}
+                className="text-white hover:text-gray-200 text-lg font-bold"
+              >
+                ✕
+              </button>
+            </div>
 
-      {/* Chat nội dung */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`flex ${
-              msg.from === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div
-              className={`px-3 py-2 rounded-lg max-w-[80%] ${
-                msg.from === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800"
-              }`}
-            >
-              {msg.text}
+            {/* Chat nội dung */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+              {messages.map((msg, i) => (
+                <div
+                  key={i}
+                  className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"
+                    }`}
+                >
+                  <div
+                    className={`px-3 py-2 rounded-lg max-w-[80%] ${msg.from === "user"
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 text-gray-800"
+                      }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Nhập tin nhắn */}
+            <div className="border-t border-gray-200 p-3 flex gap-2 bg-white">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                placeholder="Nhập tin nhắn..."
+                className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+              />
+              <button
+                onClick={handleSend}
+                aria-label="Gửi tin nhắn"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full flex items-center justify-center"
+              >
+                <BsSendFill size={18} />
+              </button>
+
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Nhập tin nhắn */}
-      <div className="border-t border-gray-200 p-3 flex gap-2 bg-white">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder="Nhập tin nhắn..."
-          className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-        />
-            <button
-      onClick={handleSend}
-      aria-label="Gửi tin nhắn"
-      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full flex items-center justify-center"
-    >
-      <BsSendFill size={18} />
-    </button>
-
-      </div>
-    </div>
-  </div>
-)}
+        </div>
+      )}
 
     </div>
   );
