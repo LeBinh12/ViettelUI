@@ -20,6 +20,7 @@ import InvoiceManagement from "./page/InvoiceManagement";
 import InvoiceDetail from "./page/InvoiceDetail";
 import InvoiceScreen from "./page/InvoiceScreen";
 import SearchPage from "./page/SearchPage";
+import LoginAuthenScreen from "./page/LoginAuthenScreen";
 
 function App() {
   useLoadUser();
@@ -33,10 +34,12 @@ function App() {
             // </PublicRoute>
           }
         >
-          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/admin/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
         </Route>
-
+        <Route>
+          <Route path="/loginAuthen" element={<LoginAuthenScreen />} />
+        </Route>
         <Route
           element={
             // <PrivateRoute>
