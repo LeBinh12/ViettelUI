@@ -7,8 +7,12 @@ export const servicePackageApi = {
 
   // Lấy tất cả
   getAll: async (): Promise<ServicePackageResponse> => {
-    console.log(`${API_URL}/ServicePackage/get-all`)
     const response = await axiosClient.get<ServicePackageResponse>(`${API_URL}/ServicePackage/get-all`);
+    return response.data
+  },
+
+  getSearch: async (search?: string): Promise<ServicePackageResponse> => {
+    const response = await axiosClient.get<ServicePackageResponse>(`${API_URL}/ServicePackage/search?keyword=${search}`);
     return response.data
   },
 
@@ -36,6 +40,5 @@ export const servicePackageApi = {
   delete: async (id: string): Promise<ServicePackageDeleteResponse> => {
     const response = await axiosClient.post<ServicePackageDeleteResponse>(`${API_URL}/ServicePackage/delete/${id}`);
     return response.data
-  },
-
+  }
 };

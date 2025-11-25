@@ -110,6 +110,15 @@ const InvoiceDetailPage: React.FC = () => {
     );
   }
 
+  const handlePrintInvoice = async (id: string) => {
+    try {
+      await invoiceApi.exportInvoice(id);
+      toast.success("Xuất hóa đơn thành công!");
+    } catch (err: any) {
+      console.log(`Looix: ${err}`);
+    }
+  };
+
   const inv = invoice.invoice;
   const status = getStatus(inv.status);
 
@@ -247,7 +256,7 @@ const InvoiceDetailPage: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => window.print()}
+                onClick={() => handlePrintInvoice(inv.id)}
                 className="flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold rounded-xl hover:shadow-xl transition-all"
               >
                 <FileText className="w-6 h-6" /> In hóa đơn

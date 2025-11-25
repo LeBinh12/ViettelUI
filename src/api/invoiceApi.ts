@@ -51,4 +51,18 @@ export const invoiceApi = {
         return axiosClient.post<ReportAdminResponse>(`${API_URL}/invoice/backup/${ID}`).then(res => res.data);
     },
 
+    exportInvoice: async (invoiceId: string) => {
+        const response = await axiosClient.get(`${API_URL}/Invoice/export/${invoiceId}`, {
+            responseType: "blob", // rất quan trọng
+        });
+
+        // tạo blob từ response
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `HoaDon_${invoiceId}.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
 };

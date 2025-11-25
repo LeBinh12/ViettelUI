@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { customerApi } from "../api/customerApi";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { customerAtom } from "../recoil/atoms/userAtom";
+import { Package, X } from "lucide-react";
 
 interface Message {
   from: "user" | "bot";
@@ -24,7 +25,7 @@ interface Message {
 
 export default function HomeLayout(): JSX.Element {
   const [customer, setCustomer] = useRecoilState(customerAtom);
-
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [method, setMethod] = useState<"email-link" | "password">("email-link");
   const [email, setEmail] = useState("");
@@ -370,6 +371,13 @@ export default function HomeLayout(): JSX.Element {
     navigate("/");
   };
 
+  const handleSearch = () => {
+    if (!search.trim()) return;
+    navigate(`/search?keyword=${encodeURIComponent(search)}`);
+    setIsSearchOpen(false); // Đóng thanh tìm kiếm sau khi tìm
+    setSearch(""); // Xóa nội dung
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* HEADER */}
@@ -413,18 +421,43 @@ export default function HomeLayout(): JSX.Element {
 
           {/* SEARCH + USER */}
           <div className="flex items-center space-x-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Tìm kiếm..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-gray-700 w-48 sm:w-64"
-              />
-              <BsSearch
-                className="absolute right-3 top-2.5 text-gray-400"
-                size={18}
-              />
+            {/* SEARCH - Mở rộng mượt mà, nằm cùng hàng header */}
+            <div className="relative flex items-center">
+              {/* Icon kính lúp + nút toggle */}
+              <button
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="flex items-center justify-center w-12 h-12 rounded-full hover:bg-gray-100 transition-all duration-300 z-10"
+              >
+                <BsSearch className="text-gray-600" size={22} />
+              </button>
+
+              {/* Thanh input mở rộng từ phải sang trái */}
+              <div
+                className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center bg-white rounded-full shadow-lg border border-gray-200 overflow-hidden transition-all duration-500 ease-in-out ${
+                  isSearchOpen ? "w-96 opacity-100" : "w-0 opacity-0"
+                }`}
+              >
+                {/* Icon kính lúp trong input */}
+                <div className="pl-5 pr-3">
+                  <Package />
+                </div>
+
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && search.trim()) handleSearch();
+                    if (e.key === "Escape") {
+                      setIsSearchOpen(false);
+                      setSearch("");
+                    }
+                  }}
+                  placeholder="Tìm gói cước, khuyến mãi, tin tức..."
+                  className="w-full py-3 pr-16 outline-none text-gray-800 placeholder-gray-400"
+                  autoFocus={isSearchOpen}
+                />
+              </div>
             </div>
             {customer ? (
               <div className="flex items-center gap-4">
