@@ -10,8 +10,11 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { invoiceApi } from "../api/invoiceApi";
 import type { InvoiceData } from "../types/payment";
+import { useRecoilValue } from "recoil";
+import { customerAtom } from "../recoil/atoms/userAtom";
 
 export default function InvoiceManagement() {
+  const customer = useRecoilValue(customerAtom);
   const [invoices, setInvoices] = useState<InvoiceData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

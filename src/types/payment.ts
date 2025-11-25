@@ -5,15 +5,15 @@ export interface InvoiceRequest {
     fullName: string,
     phone: string,
     address: string,
-    isChange: boolean
+    IsRegister: boolean,
+    password?: string
 }
 
 export interface InvoiceResponseCheckResult {
     message: string,
     succeeded: boolean,
     data: {
-        hasChanges: boolean,
-        changedFields: string[],
+        isPassword: boolean,
         token: string
     },
     code: number,
@@ -111,6 +111,15 @@ export interface InvoiceCheckHistoryRequest {
 }
 
 export interface InvoiceCheckHistoryResponse {
+    message: string,
+    succeeded: boolean,
+    data: boolean,
+    code: number,
+}
+
+
+// Response-Report-for-Admin
+export interface ReportAdminResponse {
     message: string,
     succeeded: boolean,
     data: boolean,

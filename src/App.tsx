@@ -17,6 +17,7 @@ import ProductScreen from "./page/PackageScreen";
 import ConfirmPaymentPage from "./page/ConfirmPaymentPage";
 import PackageLookup from "./page/PackageLookup";
 import InvoiceManagement from "./page/InvoiceManagement";
+import InvoiceDetail from "./page/InvoiceDetail";
 import InvoiceScreen from "./page/InvoiceScreen";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/InvoiceManagement" element={<InvoiceManagement />} />
           <Route path="/confirm-payment" element={<ConfirmPaymentPage />} />
+          <Route path="/invoice/:id" element={<InvoiceDetail />} />
         </Route>
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<DashboardScreen />} />
@@ -58,7 +60,6 @@ function App() {
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route path="/admin/invoices" element={<InvoiceScreen />} />
-
         </Route>
       </Routes>
 

@@ -3,6 +3,11 @@ export interface LoginRequest {
     password: string,
 }
 
+export interface LoginCustomer {
+    email: string,
+    password: string,
+}
+
 export interface LoginResponse {
     status: number,
     message: string,

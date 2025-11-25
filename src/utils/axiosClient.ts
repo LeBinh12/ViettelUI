@@ -12,8 +12,7 @@ const axiosClient = axios.create({
 // interceptor thêm JWT từ localStorage
 axiosClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-        const token = localStorage.getItem("access_token");
-
+        const token = localStorage.getItem("access_token_viettel");
         if (!config.headers) {
             config.headers = {} as AxiosRequestHeaders;
         }

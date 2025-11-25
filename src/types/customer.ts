@@ -7,6 +7,13 @@ export interface Customer {
     createdAt: string
 }
 
+export interface CustomerResponse {
+    message: string,
+    succeeded: boolean,
+    data: Customer,
+    code: number
+}
+
 export interface GetAllCustomerResponse {
     message: string,
     succeeded: boolean,
