@@ -20,6 +20,7 @@ import InvoiceManagement from "./page/InvoiceManagement";
 import InvoiceDetail from "./page/InvoiceDetail";
 import InvoiceScreen from "./page/InvoiceScreen";
 import SearchPage from "./page/SearchPage";
+import NotFoundPage from "./page/NotFoundPage";
 
 function App() {
   useLoadUser();
@@ -38,6 +39,7 @@ function App() {
         </Route>
         <Route>
           <Route path="/login" element={<LoginScreen />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route
           element={
