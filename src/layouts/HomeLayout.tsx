@@ -17,6 +17,7 @@ import { customerApi } from "../api/customerApi";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { customerAtom } from "../recoil/atoms/userAtom";
 import { Package, X } from "lucide-react";
+import { useLoadUser } from "../hooks/useLoadUser";
 
 interface Message {
   from: "user" | "bot";
@@ -24,6 +25,7 @@ interface Message {
 }
 
 export default function HomeLayout(): JSX.Element {
+  const { loadUser } = useLoadUser();
   const [customer, setCustomer] = useRecoilState(customerAtom);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -87,8 +89,9 @@ export default function HomeLayout(): JSX.Element {
             console.log(res.message);
           }
           localStorage.setItem("access_token_viettel", res.data);
-
           toast.success("Đăng nhập thành công!");
+          await loadUser();
+          navigate("/");
         } catch (err: any) {
           toast.success("Lỗi hệ thống");
           console.log(err);

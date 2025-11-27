@@ -4,31 +4,26 @@ import { customerAtom } from "../recoil/atoms/userAtom";
 import { customerApi } from "../api/customerApi";
 
 export const useLoadUser = () => {
-  const [customer, setCustomer] = useRecoilState(customerAtom);
+  const [, setCustomer] = useRecoilState(customerAtom);
+
+  const loadUser = async () => {
+    try {
+      const token = localStorage.getItem("access_token_viettel");
+      if (!token) return;
+
+      const user = await customerApi.getMe();
+
+      if (user?.data) {
+        setCustomer(user.data);
+      }
+    } catch (error) {
+      console.log("Load user failed:", error);
+    }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token_viettel");
-    console.log("token", token);
-    if (!token) {
-      return;
-    }
+    loadUser();
+  }, []);
 
-    const fetchUser = async () => {
-      try {
-        const profile = await customerApi.getMe();
-        if (profile?.data) {
-          setCustomer(profile.data);
-        }
-        console.log(profile);
-      } catch (err) {
-        console.warn("Token hết hạn hoặc không hợp lệ");
-        localStorage.removeItem("access_token_viettel");
-        setCustomer(null);
-      }
-    };
-
-    fetchUser();
-  }, [setCustomer]);
-
-  return customer;
+  return { loadUser };
 };

@@ -70,6 +70,7 @@ export default function ConfirmPaymentPage() {
       } else {
         toast.error("Xác nhận thất bại: " + res.message);
       }
+      navigate("/");
     } catch (err: any) {
       console.error(err);
       toast.error("Lỗi khi xác nhận thanh toán");
