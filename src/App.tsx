@@ -21,6 +21,8 @@ import InvoiceDetail from "./page/InvoiceDetail";
 import InvoiceScreen from "./page/InvoiceScreen";
 import SearchPage from "./page/SearchPage";
 import NotFoundPage from "./page/NotFoundPage";
+import InvoiceSentScreen from "./page/InvoiceSentScreen";
+import CategoryScreen from "./page/CategoryPackageScreen";
 
 function App() {
   useLoadUser();
@@ -38,6 +40,7 @@ function App() {
           <Route path="/register" element={<RegisterScreen />} />
         </Route>
         <Route>
+          <Route path="/invoice-sent" element={<InvoiceSentScreen />} />
           <Route path="/login" element={<LoginScreen />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
@@ -66,6 +69,7 @@ function App() {
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route path="/admin/invoices" element={<InvoiceScreen />} />
+          <Route path="/admin/category" element={<CategoryScreen />} />
         </Route>
       </Routes>
 

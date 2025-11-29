@@ -130,7 +130,7 @@ export default function PaymentPage(): React.JSX.Element {
           cents: res.data.price * 100,
           durationMonths: res.data.durationMonths,
         } as Plan);
-        window.history.pushState({}, "", `/payment?id=${packageId}`);
+        window.history.pushState({}, "", `/invoice-sent`);
         window.scrollTo({ top: 0, behavior: "smooth" });
         toast.success(`Đã chọn gói ${res.data.packageName}`);
       }

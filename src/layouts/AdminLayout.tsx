@@ -16,7 +16,8 @@ const AdminLayout: React.FC = () => {
 
   const menuItems = [
     { name: "Dashboard", path: "/admin/dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "Sản phẩm", path: "/admin/products", icon: <Package size={20} /> },
+        { name: "Loại cước", path: "/admin/category", icon: <Receipt size={20} /> },
+    { name: "Gói cước", path: "/admin/products", icon: <Package size={20} /> },
     { name: "Người dùng", path: "/admin/users", icon: <Users size={20} /> },
     { name: "Hóa đơn", path: "/admin/invoices", icon: <Receipt size={20} /> },
   ];
